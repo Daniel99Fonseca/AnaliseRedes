@@ -33,7 +33,7 @@ mean(grau); median(grau); quantile(grau)
 # Mediana -> 37
 # Quantis -> Q1:37 ; Q2:37 ; Q3:50
 
-# Distribuição ????????
+# Distribuição ???????
 
 # Heterogeneidade -> 1.222905 -> Ligeiramente Heterogénia
 mean(grau^2)/mean(grau)^2
