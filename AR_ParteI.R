@@ -9,9 +9,7 @@ g
 "Eu sou gui"
 ola <- "eu sou o daniel"
 joao <- 13
-"teste"
-# Estou a escrever cenas para testarmos.
-
+"É preciso fazer push?"
 
 # Parte I
 
