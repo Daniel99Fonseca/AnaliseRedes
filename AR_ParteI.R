@@ -10,6 +10,8 @@ g
 ola <- "eu sou o daniel"
 joao <- 13
 "teste"
+# Estou a escrever cenas para testarmos.
+
 
 # Parte I
 
