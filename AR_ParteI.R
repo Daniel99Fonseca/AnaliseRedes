@@ -24,6 +24,7 @@ N_lig  <- ecount(g)
 # Densidade -> 0.3470291 -> relativamente densa
 den <- edge_density(g)
 
+
 #b)
 
 # Grau e estatísticas
@@ -43,15 +44,18 @@ mean(grau^2)/mean(grau)^2
 # Existência de hubs
 # Podemos concluir que existem hubs moderados mas nada extremo
 
+
 #c)
 
 # Associação de Grau -> -0.1225804 -> Ligeiramente Disassortativa (nodos de grau elevado tendem a ligar-se a nodos de grau baixo)
 assortativity_degree(g)
 
+
 #d)
 
 # Distância entre nodos -> 1.65629 -> a maioria dos nodos está ligada diretamente ou por um intermediário (raramente por 2 intermediários)
 mean_distance(g)
+
 
 #e)
 
@@ -61,13 +65,16 @@ transitivity(g, type="global")
 # Clustering Local ?????????
 transitivity(g, type="local") # n sei interpretar
 
+
 #f)
 
 # Core -> núcleos/centros das ligações (acho eu)
 core <- coreness(g)
 table(core)
 
+
 #g) "Elabore um pequeno texto com comentários adicionais que considere pertinentes."
+
 
 #h) "Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique."
 
