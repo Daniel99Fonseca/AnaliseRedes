@@ -2,16 +2,13 @@ install.packages("igraph")
 library(igraph)
 
 #Leitura dos dados e contrução do grafo
-dados <- read.table("C:/Users/GuiPrs335PC/RstudioFiles/trab.txt")
+dados <- read.table("trab.txt")
 g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
-"Eu sou gui"
-ola <- "eu sou o daniel"
-joao <- 13
-"É preciso fazer push?"
 
-# Parte I
+## Parte I
+
 
 #a)
 
@@ -75,6 +72,24 @@ table(core)
 
 #g) "Elabore um pequeno texto com comentários adicionais que considere pertinentes."
 
+#1 A rede estudada apresenta um conjunto de nodos que ajudam a caracterizar a dinâmica social da festa.
+#2 É uma rede densa (elevada conecção entre nodos).
+#3 É globalmente conectada e compacta (distância reduzida entre nodos).
+#4 Possui clustering elevado (abundância de triângulos).
+#5 É ligeiramente heterogénia (existência de alguns nodos com grau muito superior à média).
+#6 É dissortativa (tendência para nodos de grau elevado).
+#7 No conjunto, trata-se de uma rede altamente conectada, com hubs moderados,
+#7 forte coesão local e grande eficiência global.
 
 #h) "Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique."
 
+#1 Os nodos com grau mais  elevado representão as pessoas na festa mais sociáveis .
+#1 (possivelmente anfitriões). Estes individuos têm múltiplas ligações entre si e 
+#1 integram vários triângulos.
+#2 Existem nodos que se destacam pela 'betweenness' desempenham o papel de conectores sociais entre grupos.
+#3 Os graus dos nodos das pessoas na festa sugerem participação social regular.
+#4 Os nodos de grau mais baixo, representão pessoas com menor participação social
+#4 (possivelmente chegaram atrasados ou não são tão sociáveis).
+#5 A rede apresenta elevada conectividade global, forte coesão local e uma estrutura
+#5 social típica de eventos com vários grupos de amigos. Conseguimos observar 
+#5 papéis sociais na rede dependendo do grau dos nodos e conectividade entre nodos.
