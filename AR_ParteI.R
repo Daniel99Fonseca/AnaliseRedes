@@ -6,6 +6,8 @@ dados <- read.table("C:/Users/GuiPrs335PC/RstudioFiles/trab.txt")
 g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
+ola <- "eu sou o daniel"
+
 # Parte I
 
 #a)
