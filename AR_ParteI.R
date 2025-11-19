@@ -9,6 +9,7 @@ g
 "Eu sou gui"
 ola <- "eu sou o daniel"
 joao <- 13
+"teste"
 
 # Parte I
 
