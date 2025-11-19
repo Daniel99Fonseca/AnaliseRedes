@@ -6,7 +6,10 @@ dados <- read.table("C:/Users/GuiPrs335PC/RstudioFiles/trab.txt")
 g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
-ola <- "eu sou o daniel!"
+"Eu sou gui"
+ola <- "eu sou o daniel"
+joao <- 13
+# Estou a escrever cenas para testarmos
 
 # Parte I
 
