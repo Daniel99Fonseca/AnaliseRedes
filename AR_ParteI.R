@@ -6,6 +6,13 @@ dados <- read.table("trab.txt")
 g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
+<<<<<<< HEAD
+=======
+"Eu sou gui"
+ola <- "eu sou o daniel"
+joao <- 13
+"É preciso fazer push?"
+>>>>>>> d75e878c2ff8b194cd4aeb424ffd1733eac717be
 
 ## Parte I
 
