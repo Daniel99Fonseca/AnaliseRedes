@@ -7,6 +7,7 @@ g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
 "Eu sou gui"
+ola <- "eu sou o daniel"
 
 # Parte I
 
