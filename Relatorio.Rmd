@@ -14,11 +14,30 @@ knitr::opts_chunk$set(echo=FALSE)
 ### Contextualização da rede
 
 A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que os nodos representam pessoas e as ligações interações entre as pessoas presentes na festa.
+Ao longo deste capítulo, abordaremos a rede como **Rede Festa**.
 
 ### Análise da Rede da festa
 
-**a)** Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.
+**a) Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.**
 
-A rede demonstra as interações entre `r n_nod` pessoas (número de nós). No total, foram registadas `r n_lig` interações, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade,3)` , ou seja, foram registadas `r round(densidade * 100, 1)`% das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
+A rede demonstra as interações entre **`r n_nod` pessoas** (número de nós). No total, foram registadas **`r n_lig` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade,3)` , ou seja, foram registadas **`r round(densidade * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
 
-**b)**
+**b) Obtenha o grau médio e a distribuição de grau.**
+**Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.**
+**Calcule o parâmetro de heterogeneidade.**
+**Indique o que pode concluir quanto à existência de hubs.**
+
+* **Grau Médio**: `r media_festa`
+* **Mediana** : `r median_festa`
+* **Mínimo** : `r min_festa`
+* **1o Quartil** : `r q1_festa`
+* **3o Quartil** : `r q3_festa`
+
+```{r echo=FALSE}
+dist_a
+```
+
+**Figura 1:** Histograma da distribuição de grau na Rede Festa.
+
+Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a média de interações, por pessoa, foi **`r media_festa`**.
+Se a mediana é menor que a média, indica que a distribuição é assimétrica à direita (algumas pessoas têm muitos contactos).
