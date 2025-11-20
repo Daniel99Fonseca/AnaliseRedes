@@ -43,18 +43,17 @@ q1_festa <- quantile(graus_festa,0.25)
 q3_festa <- quantile(graus_festa,0.75)
 
 # Distribuição
-dist_a <- hist(graus_festa, breaks = 20, col = "lightblue", main = "Distribuição de Grau na festa",
+hist(graus_festa, breaks = 20, col = "lightblue", main = "Distribuição de Grau na festa",
      xlab = "Número de Interações", ylab = "Frequência")
 
 # Heterogeneidade -> 1.222905 -> Ligeiramente Heterogénia
 heterogeneity_festa <- mean(graus_festa^2)/mean(graus_festa)^2
 heterogeneity_festa
 
-#c)
+# c) Estude a associação de grau e indique o que poderá concluir-se.
 
-# Associação de Grau -> -0.1225804 -> Ligeiramente Disassortativa (nodos de grau elevado tendem a ligar-se a nodos de grau baixo)
+# Associação de Grau -> -0.1225804
 assortativity_degree(g_festa)
-
 
 #d)
 
