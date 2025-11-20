@@ -1,0 +1,24 @@
+---
+title: "Relatório_Analise_Redes"
+output: html_document
+date: "2025-11-20"
+---
+
+```{r setup, include=FALSE}
+source("AR_ParteI.R")
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+# Parte I
+
+### Contextualização da rede
+
+A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que os nodos representam pessoas e as ligações interações entre as pessoas presentes na festa.
+
+### Análise da Rede da festa
+
+**a)** Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.
+
+A rede demonstra as interações entre `r n_nod` pessoas (número de nós). No total, foram registadas `r n_lig` interações, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade,3)` , ou seja, foram registadas `r round(densidade * 100, 1)`% das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
+
+**b)**
