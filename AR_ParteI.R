@@ -53,28 +53,28 @@ heterogeneity_festa
 #c)
 
 # Associação de Grau -> -0.1225804 -> Ligeiramente Disassortativa (nodos de grau elevado tendem a ligar-se a nodos de grau baixo)
-assortativity_degree(g)
+assortativity_degree(g_festa)
 
 
 #d)
 
 # Distância entre nodos -> 1.65629 -> a maioria dos nodos está ligada diretamente ou por um intermediário (raramente por 2 intermediários)
-mean_distance(g)
+mean_distance(g_festa)
 
 
 #e)
 
 # Clustering global -> 0.4952046 -> triângulos são frequentes
-transitivity(g, type="global")
+transitivity(g_festa, type="global")
 
 # Clustering Local ?????????
-transitivity(g, type="local") # n sei interpretar
+transitivity(g_festa, type="local") # n sei interpretar
 
 
 #f)
 
 # Core -> núcleos/centros das ligações (acho eu)
-core <- coreness(g)
+core <- coreness(g_festa)
 table(core)
 
 
