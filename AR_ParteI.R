@@ -2,22 +2,29 @@
 library(igraph)
 
 # Leitura dos dados e construção do grafo
-dados <- read.table("trab.txt")
+dados <- read.table("trab.txt", header = FALSE)
 g <- graph_from_data_frame(dados, directed = FALSE)
 g
 
+#############
+## Parte I ##
+#############
 
-## Parte I
 
-#a)
-# Dimensão/Número de nodos -> 113
-N_nod <- vcount(g)
+#a) Indique a dimensão e o número de ligações da rede. 
+# Determine a densidade e classifique a rede.
+
+# Dimensão / Número de nodos -> 113
+n_nod <- vcount(g)
+n_nod
 
 # Número de ligações -> 2196
-N_lig  <- ecount(g)
+n_lig  <- ecount(g)
+n_lig
 
 # Densidade -> 0.3470291 -> relativamente densa
-den <- edge_density(g)
+densidade <- edge_density(g)
+densidade
 
 #b)
 
