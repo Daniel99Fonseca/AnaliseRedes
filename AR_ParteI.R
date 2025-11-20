@@ -194,5 +194,3 @@ diam
 # Diga o que pode concluir-se quanto à existência de triângulos.
 clust_media <- transitivity(rede, type = "average")
 clust_media
-
-#ola
