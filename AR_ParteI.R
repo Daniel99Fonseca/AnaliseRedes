@@ -2,42 +2,53 @@
 library(igraph)
 
 # Leitura dos dados e construção do grafo
-dados <- read.table("trab.txt")
-g <- graph_from_data_frame(dados, directed = FALSE)
-g
+dados <- read.table("trab.txt", header = FALSE)
+g_festa <- graph_from_data_frame(dados, directed = FALSE)
+g_festa
+
+#############
+## Parte I ##
+#############
 
 
-## Parte I
+#a) Indique a dimensão e o número de ligações da rede. 
+# Determine a densidade e classifique a rede.
 
-#a)
-# Dimensão/Número de nodos -> 113
-N_nod <- vcount(g)
+# Dimensão / Número de nodos -> 113
+n_nod_festa <- vcount(g_festa)
+n_nod_festa
 
 # Número de ligações -> 2196
-N_lig  <- ecount(g)
+n_lig_festa <- ecount(g_festa)
+n_lig_festa 
 
 # Densidade -> 0.3470291 -> relativamente densa
-den <- edge_density(g)
+densidade_festa <- edge_density(g_festa)
+densidade_festa
 
-#b)
+# b) Obtenha o grau médio e a distribuição de grau. 
+# Caracterize a distribuição de grau (mediana, quartis, etc.) e comente. 
+# Calcule o parâmetro de heterogeneidade. Indique o 
+# que pode concluir quanto à existência de hubs.
 
 # Grau e estatísticas
-grau <- degree(g)
-mean(grau); median(grau); quantile(grau)
+graus_festa <- degree(g_festa)
+summary(graus_festa)
 
-# Estatísticas
-# Média -> 38.86726
-# Mediana -> 37
-# Quantis -> Q1:37 ; Q2:37 ; Q3:50
+min_festa <- min(graus_festa)
+max_festa <- max(graus_festa)
+median_festa <- median(graus_festa)
+media_festa <- mean(graus_festa)
+q1_festa <- quantile(graus_festa,0.25)
+q3_festa <- quantile(graus_festa,0.75)
 
-# Distribuição ???????
+# Distribuição
+dist_a <- hist(graus_festa, breaks = 20, col = "lightblue", main = "Distribuição de Grau na festa",
+     xlab = "Número de Interações", ylab = "Frequência")
 
 # Heterogeneidade -> 1.222905 -> Ligeiramente Heterogénia
-mean(grau^2)/mean(grau)^2
-
-# Existência de hubs
-# Podemos concluir que existem hubs moderados mas nada extremo
-
+heterogeneity_festa <- mean(graus_festa^2)/mean(graus_festa)^2
+heterogeneity_festa
 
 #c)
 
@@ -156,7 +167,7 @@ sum(graus > 10) / length(graus) * 100
 hubs <- graus > 10
 
 
-layout <- layout_with_fr(rede, niter = 2000, area = vcount(rede)^2 * 50)
+layout <- layout_with_fr(rede, niter = 2000)
 vertex_sizes <- pmin(graus + 2, 6)  # limita tamanho máximo
 plot(rede, layout = layout,
      vertex.size = vertex_sizes,
