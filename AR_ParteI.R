@@ -55,29 +55,39 @@ heterogeneity_festa
 # Associação de Grau -> -0.1225804
 assortativity_degree(g_festa)
 
-#d)
+# d) Determine a média dos comprimentos dos caminhos mais curtos.
+# Indique o que pode concluir-se quanto à distância média.
 
-# Distância entre nodos -> 1.65629 -> a maioria dos nodos está ligada diretamente ou por um intermediário (raramente por 2 intermediários)
-mean_distance(g_festa)
+# Distância entre nodos 
+dist_festa <- distances(g_festa)
+mean_dist_festa <- mean(dist)
+mean_dist_festa
 
-
-#e)
+#e) Determine os coeficientes de clustering dos nodos e da rede. 
+# Diga o que pode concluir-se quanto à existência de triângulos.
 
 # Clustering global -> 0.4952046 -> triângulos são frequentes
-transitivity(g_festa, type="global")
+clust_global_festa <- transitivity(g_festa, type="global")
+clust_global_festa
 
-# Clustering Local ?????????
-transitivity(g_festa, type="local") # n sei interpretar
+# Clustering Local
+clust_local_festa <- transitivity(g_festa, type = "local", isolates = "zero")
+# isolates = "zero" remove nodos com graus 0 e 1.
+clust_local_festa
+mean(clust_local_festa)
 
+# f) Efetue a decomposição de core da rede. Indique o número de conchas 
+# existentes e a dimensão de cada uma. Indique o que poderá concluir-se.
 
-#f)
-
-# Core -> núcleos/centros das ligações (acho eu)
+# Core -> núcleos/centros das ligações
 core <- coreness(g_festa)
-table(core)
+num_conchas <- length(unique(core))
+num_conchas
 
+dim_conchas <- table(core)
+dim_conchas
 
-#g) "Elabore um pequeno texto com comentários adicionais que considere pertinentes."
+# g) "Elabore um pequeno texto com comentários adicionais que considere pertinentes."
 
 #1 A rede estudada apresenta um conjunto de nodos que ajudam a caracterizar a dinâmica social da festa.
 #2 É uma rede densa (elevada conecção entre nodos).
@@ -88,7 +98,7 @@ table(core)
 #7 No conjunto, trata-se de uma rede altamente conectada, com hubs moderados,
 #7 forte coesão local e grande eficiência global.
 
-#h) "Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique."
+# h) "Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique."
 
 #1 Os nodos com grau mais  elevado representão as pessoas na festa mais sociáveis .
 #1 (possivelmente anfitriões). Estes individuos têm múltiplas ligações entre si e 
