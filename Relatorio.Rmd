@@ -1,5 +1,5 @@
 ---
-title: "Relatório_Analise_Redes"
+title: "Relatório Analise Redes"
 output:
   html_document: default
   pdf_document: default
@@ -59,4 +59,4 @@ Também inferimos que a maioria das pessoas (intervalo entre Q1 e Q3), teve entr
 
 Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a _hub_. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
 
-Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas. 
+Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas.
