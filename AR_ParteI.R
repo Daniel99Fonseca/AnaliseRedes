@@ -87,7 +87,7 @@ num_conchas
 dim_conchas <- table(core)
 dim_conchas
 
-# g) "Elabore um pequeno texto com comentários adicionais que considere pertinentes."
+# g) Elabore um pequeno texto com comentários adicionais que considere pertinentes.
 
 #1 A rede estudada apresenta um conjunto de nodos que ajudam a caracterizar a dinâmica social da festa.
 #2 É uma rede densa (elevada conecção entre nodos).
@@ -98,7 +98,7 @@ dim_conchas
 #7 No conjunto, trata-se de uma rede altamente conectada, com hubs moderados,
 #7 forte coesão local e grande eficiência global.
 
-# h) "Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique."
+# h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.
 
 #1 Os nodos com grau mais  elevado representão as pessoas na festa mais sociáveis .
 #1 (possivelmente anfitriões). Estes individuos têm múltiplas ligações entre si e 
@@ -129,15 +129,15 @@ vcount(rede_q1)
 
 plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
 
-# i) determine a densidade e classifique a rede;
+# i) Determine a densidade e classifique a rede;
 # Bastante esparsa com densidade 0.008
 densidade_pa <- edge_density(rede_q1)
 
-# ii) indique se a rede é conexa;
+# ii) Indique se a rede é conexa;
 # TRUE
 is_connected(rede_q1)
 
-# iii) - obtenha o grau médio e a distribuição de grau.
+# iii) - Obtenha o grau médio e a distribuição de grau.
 # Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;
 graus_q1 <- degree(rede_q1)
 
@@ -160,7 +160,7 @@ plot(cdf, main = "Distribuição acumulada de grau",
      verticals = TRUE, do.points = FALSE)
 
 
-# iv) - calcule o parâmetro de heterogeneidade. 
+# iv) - Calcule o parâmetro de heterogeneidade. 
 # Indique o que pode concluir quanto à existência de hubs;
 grau_medio <- mean(graus_q1)
 grau2_medio <- mean(graus_q1^2)
@@ -185,12 +185,12 @@ plot(rede_q1, layout = layout,
      edge.color = "grey",
      margin = 0)
 
-# v) estude a associação de grau e indique o que poderá concluir-se;
+# v) Estude a associação de grau e indique o que poderá concluir-se;
 
 assor <- assortativity_degree(rede_q1, directed=FALSE)
 assor # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
 
-# vi) - determine a média dos comprimentos dos caminhos mais curtos e 
+# vi) - Determine a média dos comprimentos dos caminhos mais curtos e 
 # o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
 
 avg_path <- mean_distance(rede_q1, directed = FALSE)
@@ -199,7 +199,7 @@ avg_path
 diam <- diameter(rede_q1, directed = FALSE)
 diam
 
-# vii) - determine os coeficientes de clustering da rede. 
+# vii) - Determine os coeficientes de clustering da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos.
 clust_media <- transitivity(rede_q1, type = "average")
 clust_media
@@ -221,26 +221,26 @@ ecount(rede_q2) #895 ligações
 
 plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
 
-# i) indique o número de ligações removidas;
+# i) - Indique o número de ligações removidas;
 # 89 ligações removidas
 rem_nod <- ecount(rede_q1) - ecount(rede_q2) 
 
-# ii) determine a densidade e classifique a rede;
+# ii) - Determine a densidade e classifique a rede;
 # Bastante esparsa com densidade 0.007 (Mais esparsa que rede_q1)
 densidade_q2 <- edge_density(rede_q2)
 
-# iii) indique se a rede é conexa;
+# iii) - Indique se a rede é conexa;
 # FALSE -> existem nodos isolados (1)
 is_connected(rede_q2)
 
-# iv) obtenha o grau médio e a distribuição de grau.
+# iv) - Obtenha o grau médio e a distribuição de grau.
 #  Caracterize a distribuição de grau (mediana, quartis, etc.) e comente; -> no relatório
 graus_q2 <- degree(rede_q2)
 
 avg_grau <- mean(graus_q2)
 summary(graus_q2)
 
-# v) calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;
+# v) - Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;
 grau_medio_q2 <- mean(graus_q2)
 grau2_medio_q2 <- mean(graus_q2^2)
 
@@ -256,22 +256,22 @@ plot(cdf_q2, main = "Distribuição acumulada de grau",
      xlab = "Grau", ylab = "Fração de nodos ≤ k",
      verticals = TRUE, do.points = FALSE)
 
-# vi) estude a associação de grau e indique o que poderá concluir-se;
+# vi) - Estude a associação de grau e indique o que poderá concluir-se;
 assor_q2 <- assortativity_degree(rede_q2, directed=FALSE)
 assor_q2 # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
 
-# vii)  determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
+# vii) - Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
 avg_path_q2 <- mean_distance(rede_q2, directed = FALSE)
 avg_path_q2
 
 diam_q2 <- diameter(rede_q2, directed = FALSE)
 diam_q2
 
-# viii) determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;
+# viii) - Determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;
 clust_media_q2 <- transitivity(rede_q2, type = "average")
 clust_media_q2
 
-# ix) compare os resultados obtidos antes e após a remoção de ligações;
+# ix) - Compare os resultados obtidos antes e após a remoção de ligações;
 
 #i) aumento de esparsidade 0.008 -> 0.007
 
@@ -281,11 +281,11 @@ clust_media_q2
 #    2.000   2.000   3.000   3.988   4.000  33.000     0.000   2.000   2.000   3.632   4.000  27.000
 
 #iv) Heterogenidade_q1 <- 2.13 => Heterogenidade_q2 <- 2.01 
-# graus com mais ligações têm mais chance de perder ligações quando removemos nodos aleatóriamente, logo menor desigualdade de ligações entre nodos
+# graus com mais ligações têm mais chance de perder ligações quando removemos nodos aleatóriamente, logo menor desigualdade de ligações entre nodos.
 
 #v) Assortatividade_q1 <- -0.115 => Assortatividade_q2 <- -0.146
-# a rede passou a ter menor tendência para conectar nós com graus semelhantes
+# A rede passou a ter menor tendência para conectar nós com graus semelhantes.
 
-#vi) aumento da distância média e do diâmetro da rede devido à remoção de "atalhos"
+#vi) Aumento da distância média e do diâmetro da rede devido à remoção de "atalhos".
 
-#vii) a clustering média diminuiu devido à diminução de nodos que resultou na diminuição de triângulos
+#vii) A clustering média diminuiu devido à diminução de nodos que resultou na diminuição de triângulos.
