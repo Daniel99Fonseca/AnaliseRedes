@@ -1,0 +1,62 @@
+---
+title: "Relatório Analise Redes"
+output:
+  html_document: default
+  pdf_document: default
+date: "2025-11-20"
+---
+
+```{r setup, include=FALSE}
+source("AR_ParteI.R")
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+# Parte I
+
+### Contextualização da rede
+
+A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que os nodos representam pessoas e as ligações interações entre as pessoas presentes na festa. Ao longo deste capítulo, abordaremos a rede como **Rede Festa**.
+
+### Análise da Rede da festa
+
+**a) Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.**
+
+A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nós). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
+
+**b) Obtenha o grau médio e a distribuição de grau.** **Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.** **Calcule o parâmetro de heterogeneidade.** **Indique o que pode concluir quanto à existência de hubs.**
+
+-   **Grau Médio**: `r media_festa`
+-   **Mediana** : `r median_festa`
+-   **Mínimo** : `r min_festa`
+-   **Máximo** : `r max_festa`
+-   **1o Quartil** : `r q1_festa`
+-   **3o Quartil** : `r q3_festa`
+-   **Heterogeneidade** : `r heterogeneity_festa`
+
+```{r dist_grau, fig.width=6, fig.height=4, echo=FALSE}
+# Histograma
+hist(graus_festa, breaks = 20, col = "lightblue",
+     main = "Distribuição de Grau na Festa",
+     xlab = "Número de Interações",
+     ylab = "Frequência")
+
+# Linhas da média e mediana
+abline(v = mean(graus_festa), col = "red", lwd = 2)    # Média
+abline(v = median(graus_festa), col = "blue", lwd = 2) # Mediana
+
+# Legenda
+legend("topright", legend = c("Média", "Mediana"),
+       col = c("red", "blue"), lwd = 2)
+```
+
+**Figura 1:** Histograma da distribuição de grau na Rede Festa.
+
+Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a pessoa típica, interagiu com **`r median_festa`** pessoas, o que representa uma festa bastante social. 
+
+Como a **mediana é menor que a média**, e vísivel na Figura 1, a distribuição é assimétrica à direita, o que indica que algumas pessoas interagiram com mais participantes do que o normal.
+
+Também inferimos que a maioria das pessoas (intervalo entre Q1 e Q3), teve entre **`r q1_festa`** a **`r q3_festa`** interações.
+
+Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a _hub_. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
+
+Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas.
