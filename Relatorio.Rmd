@@ -21,7 +21,7 @@ A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que o
 
 **a) Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.**
 
-A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nós). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
+A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nodos). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
 
 **b) Obtenha o grau médio e a distribuição de grau.** **Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.** **Calcule o parâmetro de heterogeneidade.** **Indique o que pode concluir quanto à existência de hubs.**
 
@@ -63,10 +63,10 @@ Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é
 
 **c) Estude a associação de grau e indique o que poderá concluir-se.**
 
-A associação de grau é uma medida que permite avaliar se existe uma correlação entre os graus dos nós - participantes da festa. É coeficiente que varia de -1 a 1.
+A associação de grau é uma medida que permite avaliar se existe uma correlação entre os graus dos nodos - participantes da festa. É coeficiente que varia de -1 a 1.
 
-- Valor positivo indica que nós com grau alto tendem a ligar-se a outros nós de grau alto. 
-- Valor negativo indica que nós com grau alto tendem a ligar-se a nós de grau baixo.
+- Valor positivo indica que nodos com grau alto tendem a ligar-se a outros nodos de grau alto. 
+- Valor negativo indica que nodos com grau alto tendem a ligar-se a nodos de grau baixo.
 - E um valor igual a 0 indica que não há nenhuma correlação.
 
 Na Rede da Festa, a associação tem o valor **`r assortativity_degree(g_festa)`**, o que remete para uma ligeira dissassortividade, indicando que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. Esta correlação não é muito forte, no entanto, há uma tendência nesse sentido.
@@ -92,7 +92,7 @@ Avaliando o **clustering local**, observamos alguns nodos com valores acima de *
 O **core da rede** ajuda a identificar núcleos densamente conectados dentro de uma rede. 
 O **k-core** de uma rede é um subgrafo que cada nodo tem pelo menos **k ligações** dentro desse subgrafo. No contexto da rede, um k=3 (3-core), só inclui as pessoas que têm **pelo menos** 3 interações dentro desse subgrupo.
 
-O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém 60 nós, todos com pelo menos 28 ligações internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
+O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém **60 nodos**, todos com pelo menos **28 ligações** internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
 
 Relativamente ao **número de conchas**, existem **`r num_conchas`**:
 
@@ -108,4 +108,34 @@ tabela <- rbind(
 
 ```
 
+Interessante que, se "salta" do k-core 1 diretamente o k-core 11. Na Rede da Festa não existe nenhum conjunto de nodos que possam formar um subgrafo onde todos tenham grau ≥ 2. Por isso, não existe 2-core, 3-core, etc.
 
+Concluímos que a rede é bastante densa no seu centro, dado haverem 60 nodos com 28 ligações.
+Existe uma estrutura _core periphery_, com um núcleo denso e uma periferia menos conetada, 1-core, 11-core, etc. que se liga ao núcleo mas não é tão interligada internamente.
+Existe uma variação devido às 17 conchas, o que remete para a heterogeneidade da rede.
+
+Os 60 nodos do _core_ são os mais influentes em termos de interações. Assim, remover ou isolar o núcleo pode fragmentar significativamente a rede, enquanto remover nodos da periferia teria menos impacto.
+
+**g) Elabore um pequeno texto com comentários adicionais que considere pertinentes.**
+A rede analisada apresenta uma estrutura heterogénea, com uma densidade relativamente elevada (**~35%**) e uma média de grau de aproximadamente 39 ligações por nó. A distribuição de grau revela que a maioria dos indivíduos está moderadamente conectada, mas existem nós com grau muito elevado, sugerindo a presença de alguns hubs.
+
+A heterogeneidade ligeira sugere que, embora existam hubs, a maioria dos indivíduos participa de forma equilibrada nas interações, o que indica uma certa igualdade na participação social.
+
+O coeficiente de clustering global (~0,50) e os valores de clustering local demonstram a presença de numerosos triângulos, refletindo que amigos de um mesmo indivíduo tendem a conhecer-se entre si.
+
+A estrutura da rede é propícia a formar “pequenos mundos”: nodos periféricos conseguem aceder rapidamente ao _core_ - através de poucos passos - favorecendo dinâmicas sociais.
+
+Em suma, trata-se de uma rede social relativamente densa e estruturada, com núcleos centrais influentes e uma periferia mais dispersa, permitindo identificar os indivíduos mais centrais e os padrões de ligação predominantes.
+
+
+**h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.** 
+
+Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou populares na festa, servindo como hubs de interação, conectando várias pessoas que, de outra forma, poderiam não interagir, assim como quem pertence ao _28-core_ - núcleo mais interno - desempenha um papel central na coesão do grupo, sendo considerados **'a alma da festa'**
+
+**Participantes periféricos** (de grau baixo e conchas pequenas) têm poucas ligações e podem representar pessoas menos integradas e/ou mais introvertidas, interagindo apenas com pequenos subgrupos.
+
+Já os **núcleos intermediários**, podem ser grupos de amigos próximos ou cliques, que interagem entre si e, em alguns casos, ligam-se ao núcleo central.
+
+Nodos com **clustering local** elevado - indivíduos cujos vizinhos estão muito conectados entre si - podem desempenhar o papel de 'intermediadores', mantendo pequenas “bolhas” de interação dentro da festa vivas.
+
+O **nodo** com o maior grau é considerado o mais social devido ao elevado número de interações, podendo ter o papel de organizador da festa ou - se tal for o caso - o aniversariante.
