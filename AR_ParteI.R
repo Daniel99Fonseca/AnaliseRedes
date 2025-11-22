@@ -59,7 +59,7 @@ dist_festa <- distances(g_festa)
 mean_dist_festa <- mean(dist_festa)
 mean_dist_festa
 
-#e) Determine os coeficientes de clustering dos nodos e da rede. 
+# e) Determine os coeficientes de clustering dos nodos e da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos.
 
 # Clustering global -> 0.4952046 -> triângulos são frequentes
@@ -82,17 +82,6 @@ num_conchas
 
 dim_conchas <- table(core)
 dim_conchas
-
-# g) Elabore um pequeno texto com comentários adicionais que considere pertinentes.
-
-#1 A rede estudada apresenta um conjunto de nodos que ajudam a caracterizar a dinâmica social da festa.
-#2 É uma rede densa (elevada conecção entre nodos).
-#3 É globalmente conectada e compacta (distância reduzida entre nodos).
-#4 Possui clustering elevado (abundância de triângulos).
-#5 É ligeiramente heterogénia (existência de alguns nodos com grau muito superior à média).
-#6 É dissortativa (tendência para nodos de grau elevado).
-#7 No conjunto, trata-se de uma rede altamente conectada, com hubs moderados,
-#7 forte coesão local e grande eficiência global.
 
 # h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.
 
