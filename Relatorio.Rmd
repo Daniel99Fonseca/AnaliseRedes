@@ -33,31 +33,33 @@ A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de n
 -   **3o Quartil** : `r q3_festa`
 -   **Heterogeneidade** : `r heterogeneity_festa`
 
-```{r dist_grau, fig.width=6, fig.height=4, echo=FALSE}
+```{r echo=FALSE}
 # Histograma
 hist(graus_festa, breaks = 20, col = "lightblue",
-     main = "Distribuição de Grau na Festa",
-     xlab = "Número de Interações",
-     ylab = "Frequência")
+main = "Distribuição de Grau na Festa",
+xlab = "Número de Interações",
+ylab = "Frequência")
 
 # Linhas da média e mediana
-abline(v = mean(graus_festa), col = "red", lwd = 2)    # Média
-abline(v = median(graus_festa), col = "blue", lwd = 2) # Mediana
+
+abline(v = mean(graus_festa), col = "red", lwd = 2)
+abline(v = median(graus_festa), col = "blue", lwd = 2)
 
 # Legenda
+
 legend("topright", legend = c("Média", "Mediana"),
-       col = c("red", "blue"), lwd = 2)
+col = c("red", "blue"), lwd = 2)
 ```
 
 **Figura 1:** Histograma da distribuição de grau na Rede Festa.
 
-Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a pessoa típica, interagiu com **`r median_festa`** pessoas, o que representa uma festa bastante social. 
+Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a pessoa típica, interagiu com **`r median_festa`** pessoas, o que representa uma festa bastante social.
 
 Como a **mediana é menor que a média**, e vísivel na Figura 1, a distribuição é assimétrica à direita, o que indica que algumas pessoas interagiram com mais participantes do que o normal.
 
 Também inferimos que a maioria das pessoas (intervalo entre Q1 e Q3), teve entre **`r q1_festa`** a **`r q3_festa`** interações.
 
-Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a _hub_. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
+Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a *hub*. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
 
 Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas, e, devido à distribuição assimétrica à direita, concluímos que existem hubs, por ex, a pessoa com `r max_festa` interações é claramente um hub.
 
@@ -65,28 +67,64 @@ Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é
 
 A associação de grau é uma medida que permite avaliar se existe uma correlação entre os graus dos nós - participantes da festa. É coeficiente que varia de -1 a 1.
 
-- Valor positivo indica que nós com grau alto tendem a ligar-se a outros nós de grau alto. 
-- Valor negativo indica que nós com grau alto tendem a ligar-se a nós de grau baixo.
-- E um valor igual a 0 indica que não há nenhuma correlação.
+-   Valor positivo indica que nós com grau alto tendem a ligar-se a outros nós de grau alto.
+-   Valor negativo indica que nós com grau alto tendem a ligar-se a nós de grau baixo.
+-   E um valor igual a 0 indica que não há nenhuma correlação.
 
 Na Rede da Festa, a associação tem o valor **`r assortativity_degree(g_festa)`**, o que remete para uma ligeira dissassortividade, indicando que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. Esta correlação não é muito forte, no entanto, há uma tendência nesse sentido.
 
 **d) Determine a média dos comprimentos dos caminhos mais curtos. Indique o que pode concluir-se quanto à distância média.**
 
-A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(media_dist, 3)`**.
+A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(media_dist_festa, 3)`**.
 
 Este valor indica o **número médio de passos necessários para que uma pessoa possa chegar a outra através de uma cadeia de interações**.
 
-No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist, 3)`** interações de outra pessoa.  
-Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist, 3)` dele!
+No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa. Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist, 3)` dele!
 
-**e) Determine os coeficientes de clustering dos nodos e da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
-O coeficiente de **clustering local** mede quanto os amigos de uma pessoa também são amigos entre si, ou no contexto da rede, se eu interagi com o indíviduos X e Y, o clustering local verifica se X e Y também interagiram um com o outro. Se sim, forma-se um triângulo entre "eu, X e Y". O **clustering global**, da rede, avalia se a festa teve muitos grupos de 3 pessoas completamente conetados.
+**e) Determine os coeficientes de clustering dos nodos e da rede. Diga o que pode concluir-se quanto à existência de triângulos.** O coeficiente de **clustering local** mede quanto os amigos de uma pessoa também são amigos entre si, ou no contexto da rede, se eu interagi com o indíviduos X e Y, o clustering local verifica se X e Y também interagiram um com o outro. Se sim, forma-se um triângulo entre "eu, X e Y". O **clustering global**, da rede, avalia se a festa teve muitos grupos de 3 pessoas completamente conetados.
 
 Desta forma, a Rede da Festa, teve um clustering local de **`r clustering_local_festa`**, o que é considerado bastante elevado para uma rede social, revelando como os participantes agiram na festa: em grupos coesos, com muitas interações dentro de pequenos círculos sociais, por exemplo amigos que vieram juntos, colegas de trabalho, conhecidos antes da festa.
 
 Avaliando o **clustering local**, observamos alguns nodos com valores acima de **0.70** e até **0.89**, reforçando a ideia de que houve pessoas pertencentes a grupos sociais muito fechados.
 
-**f) Efetue a decomposição de core da rede. Indique o número de conchas existentes e a dimensão de cada uma. Indique o que poderá concluir-se.
+**f) Efetue a decomposição de core da rede. Indique o número de conchas existentes e a dimensão de cada uma. Indique o que poderá concluir-se.**
 
-O core da rede 
+O core da rede
+
+# Parte II - Q1
+
+### Contextualização
+
+Foi nos pedida a criação de uma rede aleatória através do *Igraph*, na qual devem existir 500 nodos e cerca de 1000 ligações.
+
+```{r fig_rede_q1, fig.width=8, fig.height=8, echo=FALSE}
+# Modelo Preferential-Attachment
+# 500 nodos, ~1000 ligações
+set.seed(5158)
+
+rede_q1 <- sample_pa(n = 500, power = 1, m = 2, directed = FALSE)
+
+plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
+```
+
+**Figura 2** Rede Aleatória, Modelo Preferential-Attachment
+
+**I) Detemine a densidade e classifique a rede;**
+
+A densidade da rede aleatória criada é de **`r round(densidade_pa, 3)`**, ou seja, dentro desta rede apenas **`r round(densidade_pa * 100, 3)`%** das ligações possiveis estão em ação.
+
+Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede muito esparsa**
+
+**II) Indique se a rede é conexa;**
+
+**III) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
+
+**IV) calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
+
+**V) Estude a associação de grau e indique o que poderá concluir-se;**
+
+**VI) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
+
+**VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
+
+# Parte II - Q2

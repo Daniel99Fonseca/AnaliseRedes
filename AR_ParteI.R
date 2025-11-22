@@ -133,6 +133,7 @@ plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
 # i) Determine a densidade e classifique a rede;
 # Bastante esparsa com densidade 0.008
 densidade_pa <- edge_density(rede_q1)
+densidade_pa
 
 # ii) Indique se a rede é conexa;
 # TRUE
