@@ -77,10 +77,7 @@ A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(media
 
 Este valor indica o **número médio de passos necessários para que uma pessoa possa chegar a outra através de uma cadeia de interações**.
 
-
-No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa.
-Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist_festa, 3)` dele!
-
+No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa. Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist_festa, 3)` dele!
 
 **e) Determine os coeficientes de clustering dos nodos e da rede. Diga o que pode concluir-se quanto à existência de triângulos.** O coeficiente de **clustering local** mede quanto os amigos de uma pessoa também são amigos entre si, ou no contexto da rede, se eu interagi com o indíviduos X e Y, o clustering local verifica se X e Y também interagiram um com o outro. Se sim, forma-se um triângulo entre "eu, X e Y". O **clustering global**, da rede, avalia se a festa teve muitos grupos de 3 pessoas completamente conetados.
 
@@ -90,8 +87,7 @@ Avaliando o **clustering local**, observamos alguns nodos com valores acima de *
 
 **f) Efetue a decomposição de core da rede. Indique o número de conchas existentes e a dimensão de cada uma. Indique o que poderá concluir-se.**
 
-O **core da rede** ajuda a identificar núcleos densamente conectados dentro de uma rede. 
-O **k-core** de uma rede é um subgrafo que cada nodo tem pelo menos **k ligações** dentro desse subgrafo. No contexto da rede, um k=3 (3-core), só inclui as pessoas que têm **pelo menos** 3 interações dentro desse subgrupo.
+O **core da rede** ajuda a identificar núcleos densamente conectados dentro de uma rede. O **k-core** de uma rede é um subgrafo que cada nodo tem pelo menos **k ligações** dentro desse subgrafo. No contexto da rede, um k=3 (3-core), só inclui as pessoas que têm **pelo menos** 3 interações dentro desse subgrupo.
 
 O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém 60 nós, todos com pelo menos 28 ligações internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
 
@@ -108,7 +104,6 @@ tabela <- rbind(
 )
 
 ```
-
 
 # Parte II - Q1
 
@@ -130,15 +125,21 @@ plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
 
 **I) Detemine a densidade e classifique a rede;**
 
-A densidade da rede aleatória criada é de **`r round(densidade_pa, 3)`**, ou seja, dentro desta rede apenas **`r round(densidade_pa * 100, 3)`%** das ligações possiveis estão em ação.
+A densidade da rede aleatória criada é de **`r round(densidade_pa, 3)`**, isto é, dentro desta rede apenas existem **`r round(densidade_pa * 100, 3)`%** das ligações possíveis.
 
-Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede muito esparsa**
+Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede muito esparsa**.
 
 **II) Indique se a rede é conexa;**
 
+Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar todos os outros nodos da rede, e como este é o caso para a rede criada, logo podemos dizer que a rede é conexa.
+
 **III) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
 
-**IV) calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
+O grau médio da rede é de **`r round(graus_q1, 2)`**, ou seja, em média cada nodo possui cerca de **`r round(graus_q1, 0)`** ligações.
+
+A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2/Mediana=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações.
+
+**IV) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
 **V) Estude a associação de grau e indique o que poderá concluir-se;**
 
@@ -147,4 +148,3 @@ Como a densidade da rede é muito próxima de 0, a rede é classificada como **r
 **VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
 
 # Parte II - Q2
-
