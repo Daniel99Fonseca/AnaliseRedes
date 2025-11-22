@@ -41,10 +41,6 @@ media_festa <- mean(graus_festa)
 q1_festa <- quantile(graus_festa,0.25)
 q3_festa <- quantile(graus_festa,0.75)
 
-# Distribuição
-hist(graus_festa, breaks = 20, col = "lightblue", main = "Distribuição de Grau na festa",
-     xlab = "Número de Interações", ylab = "Frequência")
-
 # Heterogeneidade -> 1.222905 -> Ligeiramente Heterogénia
 heterogeneity_festa <- mean(graus_festa^2)/mean(graus_festa)^2
 heterogeneity_festa
@@ -59,7 +55,7 @@ assortativity_degree(g_festa)
 
 # Distância entre nodos 
 dist_festa <- distances(g_festa)
-mean_dist_festa <- mean(dist)
+mean_dist_festa <- mean(dist_festa)
 mean_dist_festa
 
 #e) Determine os coeficientes de clustering dos nodos e da rede. 
@@ -221,7 +217,7 @@ rede_q2 <- delete_edges(rede_q1, nod_rem) #remover os nodos selecionados aleató
 ecount(rede_q1) #997 ligações
 ecount(rede_q2) #895 ligações
 
-plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
+# plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
 
 # i) - Indique o número de ligações removidas;
 # 89 ligações removidas

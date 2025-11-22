@@ -41,12 +41,10 @@ xlab = "Número de Interações",
 ylab = "Frequência")
 
 # Linhas da média e mediana
-
 abline(v = mean(graus_festa), col = "red", lwd = 2)
 abline(v = median(graus_festa), col = "blue", lwd = 2)
 
 # Legenda
-
 legend("topright", legend = c("Média", "Mediana"),
 col = c("red", "blue"), lwd = 2)
 ```
@@ -79,7 +77,10 @@ A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(media
 
 Este valor indica o **número médio de passos necessários para que uma pessoa possa chegar a outra através de uma cadeia de interações**.
 
-No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa. Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist, 3)` dele!
+
+No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa.
+Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist_festa, 3)` dele!
+
 
 **e) Determine os coeficientes de clustering dos nodos e da rede. Diga o que pode concluir-se quanto à existência de triângulos.** O coeficiente de **clustering local** mede quanto os amigos de uma pessoa também são amigos entre si, ou no contexto da rede, se eu interagi com o indíviduos X e Y, o clustering local verifica se X e Y também interagiram um com o outro. Se sim, forma-se um triângulo entre "eu, X e Y". O **clustering global**, da rede, avalia se a festa teve muitos grupos de 3 pessoas completamente conetados.
 
@@ -89,7 +90,25 @@ Avaliando o **clustering local**, observamos alguns nodos com valores acima de *
 
 **f) Efetue a decomposição de core da rede. Indique o número de conchas existentes e a dimensão de cada uma. Indique o que poderá concluir-se.**
 
-O core da rede
+O **core da rede** ajuda a identificar núcleos densamente conectados dentro de uma rede. 
+O **k-core** de uma rede é um subgrafo que cada nodo tem pelo menos **k ligações** dentro desse subgrafo. No contexto da rede, um k=3 (3-core), só inclui as pessoas que têm **pelo menos** 3 interações dentro desse subgrupo.
+
+O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém 60 nós, todos com pelo menos 28 ligações internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
+
+Relativamente ao **número de conchas**, existem **`r num_conchas`**:
+
+```{r echo=FALSE}
+kcores <- names(dim_conchas)
+counts <- as.character(as.numeric(dim_conchas))
+
+# construir a matriz com duas linhas: primeira com "k-core" + valores, segunda com "numero de nodos" + contagens
+tabela <- rbind(
+  c("k-core", kcores),
+  c("numero de nodos", counts)
+)
+
+```
+
 
 # Parte II - Q1
 
@@ -128,3 +147,4 @@ Como a densidade da rede é muito próxima de 0, a rede é classificada como **r
 **VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
 
 # Parte II - Q2
+
