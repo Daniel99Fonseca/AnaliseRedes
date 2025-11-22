@@ -6,9 +6,8 @@ dados <- read.table("trab.txt", header = FALSE)
 g_festa <- graph_from_data_frame(dados, directed = FALSE)
 g_festa
 
-#############
-## Parte I ##
-#############
+
+### Parte I
 
 
 #a) Indique a dimensão e o número de ligações da rede. 
@@ -111,7 +110,9 @@ dim_conchas
 #5 social típica de eventos com vários grupos de amigos. Conseguimos observar 
 #5 papéis sociais na rede dependendo do grau dos nodos e conectividade entre nodos.
 
+
 ### Parte II
+
 
 ############
 #### Q1 #### seed <- 5158
@@ -204,9 +205,9 @@ diam
 clust_media <- transitivity(rede_q1, type = "average")
 clust_media
 
-##########
-####Q2#### seed <- 5158
-##########
+############
+#### Q2 #### seed <- 5158
+############
 
 prob_rem <- 0.1 #probabilidade do nodo ser removido
 
