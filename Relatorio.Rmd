@@ -1,5 +1,5 @@
 ---
-title: "Relatório Analise Redes"
+title: "Relatório Análise de Redes"
 output:
   pdf_document:
     latex_engine: xelatex
@@ -13,18 +13,18 @@ knitr::opts_chunk$set(echo=FALSE)
 
 # Parte I
 
-### Contextualização da rede
+## Contextualização da rede
 
 A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que os nodos representam pessoas e as ligações interações entre as pessoas presentes na festa. Ao longo deste capítulo, abordaremos a rede como **Rede Festa**.
 
-### Análise da Rede da festa
+## Análise da Rede da festa
 
 **a) Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.**
 
 A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nodos). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.1 - Rede da Festa"}
-plot(g_festa, vertex.size=8, vertex.label=NA, edge.color="grey80")
+```{r echo=FALSE, fig.width=7, fig.height=4, fig.cap="Rede da Festa", fig.pos='H', fig.align='center'}
+plot(g_festa, vertex.size=8, vertex.label=NA, edge.color="grey80", main="Rede da Festa")
 ```
 
 **b) Obtenha o grau médio e a distribuição de grau.** **Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.** **Calcule o parâmetro de heterogeneidade.** **Indique o que pode concluir quanto à existência de hubs.**
@@ -37,7 +37,7 @@ plot(g_festa, vertex.size=8, vertex.label=NA, edge.color="grey80")
 -   **3o Quartil** : `r q3_festa`
 -   **Heterogeneidade** : `r heterogeneity_festa`
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.2 - Distribuição dos graus"}
+```{r echo=FALSE, fig.width=7, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 # Histograma
 hist(graus_festa, breaks = 20, col = "lightblue",
 main = "Distribuição de Grau na Festa",
@@ -57,7 +57,7 @@ Através das estatísticas da distribuição de grau na Rede Festa, inferimos qu
 
 Como a **mediana é menor que a média**, e vísivel na Figura 1, a distribuição é assimétrica à direita, o que indica que algumas pessoas interagiram com mais participantes do que o normal.
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.3 - Boxplot Rede da Festa"}
+```{r echo=FALSE, fig.width=7, fig.height=4, fig.cap="Boxplot Rede da Festa", fig.pos='H', fig.align='center'}
 boxplot(degree(g_festa), horizontal=TRUE)
 ```
 
@@ -66,7 +66,7 @@ Também inferimos que a maioria das pessoas (intervalo entre Q1 e Q3), teve entr
 
 Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a *hub*. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
 
-Relativamente à heterogeneidade, com o valor de **`r heterogeneity_festa`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas, e, devido à distribuição assimétrica à direita, concluímos que existem hubs, por ex, a pessoa com `r max_festa` interações é claramente um hub.
+Relativamente à heterogeneidade, com o valor de **`r round(heterogeneity_festa,3)`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas, e, devido à distribuição assimétrica à direita, concluímos que existem hubs, por ex, a pessoa com `r max_festa` interações é claramente um hub.
 
 **c) Estude a associação de grau e indique o que poderá concluir-se.**
 
@@ -76,7 +76,7 @@ A associação de grau é uma medida que permite avaliar se existe uma correlaç
 - Valor negativo indica que nodos com grau alto tendem a ligar-se a nodos de grau baixo.
 - E um valor igual a 0 indica que não há nenhuma correlação.
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.4 - Grau do nó vs Grau médio dos vizinhos"}
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Grau do nó vs Grau médio dos vizinhos", fig.pos='H', fig.align='center'}
 knn_nodos <- knn(g_festa, vids=V(g_festa))$knn
 plot(graus_festa, knn_nodos, pch=20,
      xlab="Grau do nodo", ylab="Grau médio dos vizinhos")
@@ -86,7 +86,7 @@ A figura 4 permite perceber se as pessoas com mais interações (ligações) ten
 
 A inclinação da linha vermelha indica a assortatividade de grau da rede. A assortatividade ligeiramente negativa (**-0.12**) que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. 
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, fig.pos='H', fig.align='center'}
 library(knitr)
 library(kableExtra)
 
@@ -121,7 +121,7 @@ O **core da rede** ajuda a identificar núcleos densamente conectados dentro de 
 O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém **60 nodos**, todos com pelo menos **28 ligações** internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
 
 
-```{r core28_plot, fig.width=4, fig.height=4, fig.cap="Fig. 5 - 28-core da Rede da Festa"}
+```{r core28_plot, fig.width=4, fig.height=4, fig.cap="28-core da Rede da Festa", fig.pos='H', fig.align='center'}
 
 # Seleciona nodos do 28-core
 core28_nodes <- V(g_festa)[core == 28]
@@ -142,7 +142,7 @@ plot(g_festa,
 
 Relativamente ao **número de conchas**, existem **`r num_conchas`**:
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.pos='H', fig.align='center'}
 library(knitr)
 kcores <- names(dim_conchas)
 counts <- as.character(as.numeric(dim_conchas))
@@ -172,7 +172,7 @@ O coeficiente de clustering global (~0,50) e os valores de clustering local demo
 
 A estrutura da rede é propícia a formar “pequenos mundos”: nodos periféricos conseguem aceder rapidamente ao _core_ - através de poucos passos - favorecendo dinâmicas sociais.
 
-```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Fig. 6 - Comunidades da Rede da Festa"}
+```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Comunidades da Rede da Festa", fig.pos='H', fig.align='center'}
 lc <- cluster_louvain(g_festa)
 # Escolher comunidades com mais de 10 nós
 com_grandes <- which(table(membership(lc)) > 10)
@@ -196,7 +196,7 @@ Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou popu
 A _**betweenness**_ mede quantas vezes um nó está no caminho mais curto entre outros dois nós.
 Pessoas com _betweenness_ alta são consideradas pontes, intermediários, ligam grupos diferentes, e com _betweeness_ baixa, estão integradas num grupo, mas não ligam grupos entre si.
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig. 7 - Os 10 nós com mais intermediação"}
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Os 10 nós com mais intermediação",fig.pos='H', fig.align='center'}
 top10 <- sort(bet, decreasing = TRUE)[1:10]
 
 ids <- names(top10)
@@ -212,7 +212,7 @@ barplot(
 ```
 Assim, de acordo com a Figura X, podemos identificar o Nó 30 como o que interagiu com mais grupos diversos, facilitando as interações entre pessoas diversas.
 
-```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig. 8 - O nó mais central"}
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="O nó mais central",fig.pos='H', fig.align='center'}
 # Criar cores para os nós
 cores <- rep("lightblue", vcount(g_festa))
 cores[nodo_top] <- "red"  # destaca o nó mais central
@@ -225,7 +225,7 @@ plot(g_festa,
      vertex.color = cores,
      vertex.size = tamanhos*1.3,
      vertex.label = NA,
-     main = "Rede da festa (nó com maior betweenness em vermelho)")
+     main = "Nó com maior betweeness")
 ```
 
 **Participantes periféricos** (de grau baixo e conchas pequenas) têm poucas ligações e podem representar pessoas menos integradas e/ou mais introvertidas, interagindo apenas com pequenos subgrupos.
