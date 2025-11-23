@@ -1,4 +1,5 @@
 # install.packages("igraph")
+# install.packages("kableExtra")
 library(igraph)
 
 # Leitura dos dados e construção do grafo
@@ -6,9 +7,7 @@ dados <- read.table("trab.txt", header = FALSE)
 g_festa <- graph_from_data_frame(dados, directed = FALSE)
 g_festa
 
-
-### Parte I
-
+################################# Parte I ##############################
 
 #a) Indique a dimensão e o número de ligações da rede. 
 # Determine a densidade e classifique a rede.
@@ -50,6 +49,11 @@ heterogeneity_festa
 # Associação de Grau -> -0.1225804
 assortativity_degree(g_festa)
 
+knn_vals <- knn(g_festa)$knn
+
+nos_grau1 <- which(graus_festa == 1)
+nos_grau1
+
 # d) Determine a média dos comprimentos dos caminhos mais curtos.
 # Indique o que pode concluir-se quanto à distância média.
 
@@ -82,23 +86,24 @@ num_conchas
 dim_conchas <- table(core)
 dim_conchas
 
-# h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.
+bet <- betweenness(g_festa)
+cls <- closeness(g_festa)
+lc <- cluster_louvain(g_festa)
 
-#1 Os nodos com grau mais  elevado representão as pessoas na festa mais sociáveis .
-#1 (possivelmente anfitriões). Estes individuos têm múltiplas ligações entre si e 
-#1 integram vários triângulos.
-#2 Existem nodos que se destacam pela 'betweenness' desempenham o papel de conectores sociais entre grupos.
-#3 Os graus dos nodos das pessoas na festa sugerem participação social regular.
-#4 Os nodos de grau mais baixo, representão pessoas com menor participação social
-#4 (possivelmente chegaram atrasados ou não são tão sociáveis).
-#5 A rede apresenta elevada conectividade global, forte coesão local e uma estrutura
-#5 social típica de eventos com vários grupos de amigos. Conseguimos observar 
-#5 papéis sociais na rede dependendo do grau dos nodos e conectividade entre nodos.
+#### Variáveis auxiliares para gráficos
+
+# Identificar nó com maior betweenness
+nodo_top <- which.max(bet)
+
+membership_lc <- membership(lc)
+
+# Identificar os 5 nós com maior grau
+top_hubs <- names(sort(graus_festa, decreasing = TRUE)[1:5])
+top_hubs
+membership_lc[top_hubs]
 
 
-### Parte II
-
-
+############################ PARTE II #######################################
 ############
 #### Q1 #### seed <- 5158
 ############
