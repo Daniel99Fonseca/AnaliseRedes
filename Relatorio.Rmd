@@ -1,8 +1,8 @@
 ---
 title: "Relatório Analise Redes"
 output:
-  html_document: default
-  pdf_document: default
+  pdf_document:
+    latex_engine: xelatex
 date: "2025-11-20"
 ---
 
@@ -23,6 +23,10 @@ A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que o
 
 A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nodos). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
 
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.1 - Rede da Festa"}
+plot(g_festa, vertex.size=8, vertex.label=NA, edge.color="grey80")
+```
+
 **b) Obtenha o grau médio e a distribuição de grau.** **Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.** **Calcule o parâmetro de heterogeneidade.** **Indique o que pode concluir quanto à existência de hubs.**
 
 -   **Grau Médio**: `r media_festa`
@@ -33,7 +37,7 @@ A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de n
 -   **3o Quartil** : `r q3_festa`
 -   **Heterogeneidade** : `r heterogeneity_festa`
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.2 - Distribuição dos graus"}
 # Histograma
 hist(graus_festa, breaks = 20, col = "lightblue",
 main = "Distribuição de Grau na Festa",
@@ -49,13 +53,16 @@ legend("topright", legend = c("Média", "Mediana"),
 col = c("red", "blue"), lwd = 2)
 ```
 
-**Figura 1:** Histograma da distribuição de grau na Rede Festa.
-
 Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a pessoa típica, interagiu com **`r median_festa`** pessoas, o que representa uma festa bastante social.
 
 Como a **mediana é menor que a média**, e vísivel na Figura 1, a distribuição é assimétrica à direita, o que indica que algumas pessoas interagiram com mais participantes do que o normal.
 
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.3 - Boxplot Rede da Festa"}
+boxplot(degree(g_festa), horizontal=TRUE)
+```
+
 Também inferimos que a maioria das pessoas (intervalo entre Q1 e Q3), teve entre **`r q1_festa`** a **`r q3_festa`** interações.
+
 
 Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, alguém interagiu com quase todos os participantes, logo é um candidato para a *hub*. Em contraste, alguém esteve isolado na festa, com apenas `r min_festa` interação.
 
@@ -69,20 +76,41 @@ A associação de grau é uma medida que permite avaliar se existe uma correlaç
 - Valor negativo indica que nodos com grau alto tendem a ligar-se a nodos de grau baixo.
 - E um valor igual a 0 indica que não há nenhuma correlação.
 
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig.4 - Grau do nó vs Grau médio dos vizinhos"}
+knn_nodos <- knn(g_festa, vids=V(g_festa))$knn
+plot(graus_festa, knn_nodos, pch=20,
+     xlab="Grau do nodo", ylab="Grau médio dos vizinhos")
+abline(lm(knn_nodos ~ graus_festa), col="red")
+```
+A figura 4 permite perceber se as pessoas com mais interações (ligações) tendem a interagir com outras igualmente populares ou com pessoas menos conectadas.
 
-Na Rede da Festa, a associação tem o valor **`r assortativity_degree(g_festa)`**, o que remete para uma ligeira dissassortividade, indicando que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. Esta correlação não é muito forte, no entanto, há uma tendência nesse sentido.
+A inclinação da linha vermelha indica a assortatividade de grau da rede. A assortatividade ligeiramente negativa (**-0.12**) que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. 
+
+```{r echo=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+
+df <- data.frame(
+  no = nos_grau1,
+  grau = graus_festa[nos_grau1],
+  knn = knn_vals[nos_grau1]
+)
+
+kable(df, format = "latex", booktabs = TRUE, caption = "Nodos com grau 1 e respetivo kNN") %>%
+  kable_styling(latex_options = c("hold_position"))
+```
 
 **d) Determine a média dos comprimentos dos caminhos mais curtos. Indique o que pode concluir-se quanto à distância média.**
 
-A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(media_dist_festa, 3)`**.
+A média dos comprimentos dos caminhos mais curtos na rede foi: **`r round(mean_dist_festa, 3)`**.
 
 Este valor indica o **número médio de passos necessários para que uma pessoa possa chegar a outra através de uma cadeia de interações**.
 
-No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(media_dist_festa, 3)`** interações de outra pessoa. Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(media_dist_festa, 3)` dele!
+No contexto da festa, isto significa que, em média, qualquer pessoa está a apenas cerca de **`r round(mean_dist_festa, 3)`** interações de outra pessoa. Isto sugere que a rede apresenta um comportamento típico de **small-world**: mesmo com mais de cem participantes, a distância média entre duas pessoas é relativamente reduzida, dado que a teoria de "6 passos de separação" sugere que qualquer pessoa está a, no máximo, 6 interações/conexões de qualquer outra pessoa no planeta. Assim, na festa, em teoria, se quiseremos interagir com o indivíduo X, estamos a `r round(mean_dist_festa, 3)` dele!
 
 **e) Determine os coeficientes de clustering dos nodos e da rede. Diga o que pode concluir-se quanto à existência de triângulos.** O coeficiente de **clustering local** mede quanto os amigos de uma pessoa também são amigos entre si, ou no contexto da rede, se eu interagi com o indíviduos X e Y, o clustering local verifica se X e Y também interagiram um com o outro. Se sim, forma-se um triângulo entre "eu, X e Y". O **clustering global**, da rede, avalia se a festa teve muitos grupos de 3 pessoas completamente conetados.
 
-Desta forma, a Rede da Festa, teve um clustering local de **`r clustering_local_festa`**, o que é considerado bastante elevado para uma rede social, revelando como os participantes agiram na festa: em grupos coesos, com muitas interações dentro de pequenos círculos sociais, por exemplo amigos que vieram juntos, colegas de trabalho, conhecidos antes da festa.
+Desta forma, a Rede da Festa, teve um clustering local de **`r mean(clust_local_festa)`**, o que é considerado bastante elevado para uma rede social, revelando como os participantes agiram na festa: em grupos coesos, com muitas interações dentro de pequenos círculos sociais, por exemplo amigos que vieram juntos, colegas de trabalho, conhecidos antes da festa.
 
 Avaliando o **clustering local**, observamos alguns nodos com valores acima de **0.70** e até **0.89**, reforçando a ideia de que houve pessoas pertencentes a grupos sociais muito fechados.
 
@@ -92,18 +120,39 @@ O **core da rede** ajuda a identificar núcleos densamente conectados dentro de 
 
 O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém **60 nodos**, todos com pelo menos **28 ligações** internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
 
+
+```{r core28_plot, fig.width=4, fig.height=4, fig.cap="Fig. 5 - 28-core da Rede da Festa"}
+
+# Seleciona nodos do 28-core
+core28_nodes <- V(g_festa)[core == 28]
+
+# Define cores: 28-core em vermelho, restantes em azul claro
+V(g_festa)$color <- ifelse(V(g_festa) %in% core28_nodes, "red", "lightblue")
+
+# Layout fixo (para evitar problemas de tamanho)
+lay <- layout_with_fr(g_festa)
+
+# Plot
+plot(g_festa,
+     layout = lay,
+     vertex.size = 6,
+     vertex.label = NA,
+     main = "Rede da festa com 28-core destacado")
+```
+
 Relativamente ao **número de conchas**, existem **`r num_conchas`**:
 
 ```{r echo=FALSE}
+library(knitr)
 kcores <- names(dim_conchas)
 counts <- as.character(as.numeric(dim_conchas))
 
-# construir a matriz com duas linhas: primeira com "k-core" + valores, segunda com "numero de nodos" + contagens
 tabela <- rbind(
-  c("k-core", kcores),
-  c("numero de nodos", counts)
+c("k-core", kcores),
+c("Número de nodos", counts)
 )
 
+kable(tabela, caption = "Distribuição de k-cores na rede", align = "c")
 ```
 
 Interessante que, se "salta" do k-core 1 diretamente o k-core 11. Na Rede da Festa não existe nenhum conjunto de nodos que possam formar um subgrafo onde todos tenham grau ≥ 2. Por isso, não existe 2-core, 3-core, etc.
@@ -123,12 +172,61 @@ O coeficiente de clustering global (~0,50) e os valores de clustering local demo
 
 A estrutura da rede é propícia a formar “pequenos mundos”: nodos periféricos conseguem aceder rapidamente ao _core_ - através de poucos passos - favorecendo dinâmicas sociais.
 
+```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Fig. 6 - Comunidades da Rede da Festa"}
+lc <- cluster_louvain(g_festa)
+# Escolher comunidades com mais de 10 nós
+com_grandes <- which(table(membership(lc)) > 10)
+subg <- induced_subgraph(g_festa, which(membership(lc) %in% com_grandes))
+plot(lc, g_festa, vertex.size = ifelse(names(V(g_festa)) %in% top_hubs, 15, 7),
+     vertex.label=NA, vertex.color=membership_lc,edge.color = rgb(0,0,0,0.1))
+
+```
+
+Na Figura X - Gráfico de Louvain - é possível observar as comunidades. 
+Cada cor representa uma comunidade detetada pelo algoritmo Louvain, sendo que os nós de cada comunidade estão mais conetados entre si. Por sua vez, os nós mais próximos uns dos outros tendem a ter mais ligações entre si. Os nós mais próximos das fronteiras de cada comunidade são considerados 'nós-pontes' dado facilitarem as interações entre diversas comunidades. 
+Desta forma, é possível observar, de forma visual, o que fora abordado até agora, os hubs, os nós centrais e os grupos mais coesos.
+
 Em suma, trata-se de uma rede social relativamente densa e estruturada, com núcleos centrais influentes e uma periferia mais dispersa, permitindo identificar os indivíduos mais centrais e os padrões de ligação predominantes.
 
 
 **h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.** 
 
-Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou populares na festa, servindo como hubs de interação, conectando várias pessoas que, de outra forma, poderiam não interagir, assim como quem pertence ao _28-core_ - núcleo mais interno - desempenha um papel central na coesão do grupo, sendo considerados **'a alma da festa'**
+Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou populares na festa, servindo como hubs de interação, conectando várias pessoas que, de outra forma, poderiam não interagir, assim como quem pertence ao _28-core_ - núcleo mais interno - desempenha um papel central na coesão do grupo, sendo considerados **'a alma da festa'**.
+
+A _**betweenness**_ mede quantas vezes um nó está no caminho mais curto entre outros dois nós.
+Pessoas com _betweenness_ alta são consideradas pontes, intermediários, ligam grupos diferentes, e com _betweeness_ baixa, estão integradas num grupo, mas não ligam grupos entre si.
+
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig. 7 - Os 10 nós com mais intermediação"}
+top10 <- sort(bet, decreasing = TRUE)[1:10]
+
+ids <- names(top10)
+
+barplot(
+  top10,
+  names.arg = ids,
+  col = "orange",
+  main = "Top 10 pessoas com maior betweenness",
+  ylab = "Betweenness",
+  xlab = "Número do Nó"
+)
+```
+Assim, de acordo com a Figura X, podemos identificar o Nó 30 como o que interagiu com mais grupos diversos, facilitando as interações entre pessoas diversas.
+
+```{r echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fig. 8 - O nó mais central"}
+# Criar cores para os nós
+cores <- rep("lightblue", vcount(g_festa))
+cores[nodo_top] <- "red"  # destaca o nó mais central
+
+# Criar tamanhos proporcionais ao betweenness
+tamanhos <- 5 + 10 * (bet / max(bet))  # escala para visualização
+
+# Plot da rede
+plot(g_festa,
+     vertex.color = cores,
+     vertex.size = tamanhos*1.3,
+     vertex.label = NA,
+     main = "Rede da festa (nó com maior betweenness em vermelho)")
+```
 
 **Participantes periféricos** (de grau baixo e conchas pequenas) têm poucas ligações e podem representar pessoas menos integradas e/ou mais introvertidas, interagindo apenas com pequenos subgrupos.
 
