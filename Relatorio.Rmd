@@ -187,9 +187,13 @@ A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(g
 
 **I) Indique o número de ligações removidas;**
 
+Após a remoção do nodos selecionados aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede.
+
 **II) Determine a densidade e classifique a rede;**
 
 **III) Indique se a rede é conexa;**
+
+Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar todos os outros nodos da rede. Devido à remoção dos nodos e consequentemente a perda de **`r rem_nod`** ligações, a nova rede deixou de ser conexa, pois um nodo perdeu todas a ligações ficando isolado da rede.
 
 **IV) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
 
