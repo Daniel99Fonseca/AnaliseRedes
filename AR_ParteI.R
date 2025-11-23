@@ -210,7 +210,8 @@ ecount(rede_q2) #895 ligações
 
 # i) - Indique o número de ligações removidas;
 # 89 ligações removidas
-rem_nod <- ecount(rede_q1) - ecount(rede_q2) 
+rem_nod <- ecount(rede_q1) - ecount(rede_q2)
+rem_nod
 
 # ii) - Determine a densidade e classifique a rede;
 # Bastante esparsa com densidade 0.007 (Mais esparsa que rede_q1)

@@ -170,7 +170,7 @@ Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar tod
 
 **III) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
 
-O grau médio da rede é de **`r round(graus_q1, 2)`**, ou seja, em média cada nodo possui cerca de **`r round(graus_q1, 0)`** ligações.
+O grau médio da rede é de **`r round(mean(graus_q1), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q1), 0)`** ligações.
 
 A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2/Mediana=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações.
 
