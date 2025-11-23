@@ -184,3 +184,21 @@ A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(g
 
 
 # Parte II - Q2
+
+**I) Indique o número de ligações removidas;**
+
+**II) Determine a densidade e classifique a rede;**
+
+**III) Indique se a rede é conexa;**
+
+**IV) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
+
+**V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
+
+**VI) Estude a associação de grau e indique o que poderá concluir-se;**
+
+**VII) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
+
+**VIII) Determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;**
+
+**IX)  Compare os resultados obtidos antes e após a remoção de ligações.**
