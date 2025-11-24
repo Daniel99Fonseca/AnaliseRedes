@@ -347,12 +347,35 @@ A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(g
 
 **IV) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
+O parâmetro de heterogeneidade mede o quão desigual é a distribuição de graus da rede.Para a rede gerada, o valor obtido foi de **`r round(H, 3)`**.
+
+Como este valor é superior a 1, indica que a rede é **bastante heterogénea**, ou seja, existe uma grande variação no número de ligações entre os nodos. A maioria dos nodos apresenta poucos contactos, enquanto um pequeno número de nodos concentra um número muito elevado de ligações.
+
+Isto é característico do modelo de *preferential attachment*, onde nós mais antigos tendem a acumular mais ligações ao longo do tempo.
+
 **V) Estude a associação de grau e indique o que poderá concluir-se;**
+
+A associação de grau avalia se nodos com muitas ligações tendem a ligar-se a outros nodos também com várias ligações (rede assortativa) ou se, pelo contrário, se ligam a nodos com poucas ligações (rede desassortativa).
+
+A associação de grau foi calculada, tendo sido obtido o valor de **`r round(assor, 3)`**. Como o valor é **negativo**, conclui-se que a rede é **desassortativa**, o que significa que os nodos com grau mais elevado tendem a ligar-se preferencialmente a nodos com grau mais baixo.
+
+Este comportamento é típico de redes geradas pelo modelo de *preferential attachment*, nas quais existem alguns nós altamente conectados (hubs) que funcionam como pontos centrais de ligação para muitos nós periféricos com poucas ligações.
 
 **VI) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
 
+A média dos comprimentos dos caminhos mais curtos obtida foi de **`r round(avg_path, 3)`**, enquanto o diâmetro da rede foi de **`r diam`**.
+
+Estes resultados indicam que, em média, são necessários cerca de **`r round(avg_path, 2)`** passos para ligar dois nodos da rede. O diâmetro confirma que mesmo os nodos mais distantes estão separados por um número reduzido de passos.
+
+Assim, conclui-se que a rede apresenta uma elevada eficiência em termos de conectividade, o que por si só mostra características típicas de redes do tipo *small-world*.
+
 **VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
 
+O coeficiente de clustering da rede foi calculado através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
+
+Este valor indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si. 
+
+Com base no valor obtido, conclui-se então que existe uma formação de triângulos na rede, embora não de forma muito intensa, o que é consistente com redes do tipo *preferential attachment*, onde a estrutura tende a ser menos agrupada em pequenos clusters fortemente conectados.
 
 # Parte II - Q2
 
@@ -361,6 +384,10 @@ A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(g
 Após a remoção do nodos selecionados aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede.
 
 **II) Determine a densidade e classifique a rede;**
+
+A densidade da nova rede criada é de **`r round(densidade_q2, 3)`**, ou seja, dentro da nova rede apenas existem **`r round(densidade_q2 * 100, 3)`%** das ligações possíveis.
+
+A nova rede é também **muito esparsa** e sendo ainda mais esparsa do que a original porque o valor da densidade aproxima-se ainda mais de 0.
 
 **III) Indique se a rede é conexa;**
 
