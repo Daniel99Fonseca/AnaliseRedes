@@ -1,10 +1,12 @@
 ---
-title: "null"
+title: 'null'
 output:
-  word_document: default
   pdf_document:
     latex_engine: xelatex
-date: "null"
+  html_document:
+    df_print: paged
+  word_document: default
+date: 'null'
 ---
 
 ```{r setup, include=FALSE}
