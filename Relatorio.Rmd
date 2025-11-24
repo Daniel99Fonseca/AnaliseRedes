@@ -347,7 +347,7 @@ A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(g
 
 **IV) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
-O parâmetro de heterogeneidade mede o quão desigual é a distribuição de graus da rede.Para a rede gerada, o valor obtido foi de **`r round(heterogeneity_q1, 3)`**.
+O parâmetro de heterogeneidade mede o quão desigual é a distribuição de graus da rede.Para a rede gerada, o valor obtido foi de **`r round(H, 3)`**.
 
 Como este valor é superior a 1, indica que a rede é **bastante heterogénea**, ou seja, existe uma grande variação no número de ligações entre os nodos. A maioria dos nodos apresenta poucos contactos, enquanto um pequeno número de nodos concentra um número muito elevado de ligações.
 
@@ -385,7 +385,9 @@ Após a remoção do nodos selecionados aleatóriamente pudémos verificar uma r
 
 **II) Determine a densidade e classifique a rede;**
 
+A densidade da nova rede criada é de **`r round(densidade_q2, 3)`**, ou seja, dentro da nova rede apenas existem **`r round(densidade_q2 * 100, 3)`%** das ligações possíveis.
 
+A nova rede é também **muito esparsa** e sendo ainda mais esparsa do que a original porque o valor da densidade aproxima-se ainda mais de 0.
 
 **III) Indique se a rede é conexa;**
 
