@@ -1,12 +1,10 @@
 ---
-title: 'null'
+title: "null"
 output:
   pdf_document:
     latex_engine: xelatex
-  html_document:
-    df_print: paged
   word_document: default
-date: 'null'
+date: "null"
 ---
 
 ```{r setup, include=FALSE}
@@ -28,7 +26,7 @@ A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que o
 
 A rede demonstra as interações entre **`r n_nod_festa` pessoas** (número de nodos). No total, foram registadas **`r n_lig_festa` interações**, o que indica que a festa foi movimentada, com várias interações entre os participantes da festa, dado que a densidade da rede tem um valor de `r round(densidade_festa,3)` , ou seja, foram registadas **`r round(densidade_festa * 100, 1)`%** das possíveis interações entre os 113 convidados. Por conseguinte, dado o contexto da rede (social), consideramos a rede como relativamente esparsa.
 
-```{r echo=FALSE, fig.width=6, fig.height=5, fig.cap="Rede da Festa", fig.align='center'}
+```{r echo=FALSE, fig.width=6, fig.height=5, fig.cap="Rede da Festa", fig.align='center', fig.pos='H'}
 
 layout_graphopt <- layout_with_graphopt(
   g_festa,
@@ -78,7 +76,7 @@ Através das estatísticas da distribuição de grau na Rede Festa, inferimos qu
 
 Como a **mediana é menor que a média**, e vísivel na Figura 1, a distribuição é assimétrica à direita, o que indica que algumas pessoas interagiram com mais participantes do que o normal.
 
-```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Boxplot da distribuição de graus na Festa", fig.pos='H', fig.align='center'}
+```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Festa", fig.pos='H', fig.align='center'}
 
 # Reduz margens
 par(mar = c(5, 4, 4, 2) + 0.1)
@@ -91,7 +89,7 @@ boxplot(graus_festa,
         xlab = "Número de Interações",
         ylab = "",
         las = 1,
-        outcol = "darkred")
+        outcol = "red")
 
 abline(v = median_festa, col = "red", lwd = 2, lty = 2)
 
@@ -183,14 +181,14 @@ core28_nodes <- V(g_festa)[core == 28]
 V(g_festa)$color <- ifelse(V(g_festa) %in% core28_nodes, "red", "lightblue")
 
 # A tentar afastar os nodos
-lay <- layout_with_fr(g_festa, niter = 1000, repulserad = vcount(g_festa)^2)
+lay <- layout_with_fr(g_festa, niter = 1000)
 
 plot(g_festa,
      layout = lay,
      vertex.size = 7,
      vertex.label = NA,
      vertex.frame.color = "black",
-     main = "Rede da festa com 28-core destacado")
+     main = "28-core Rede da Festa")
 ```
 
 Relativamente ao **número de conchas**, existem **`r num_conchas`**:
