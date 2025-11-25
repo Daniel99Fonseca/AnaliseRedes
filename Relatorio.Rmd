@@ -399,6 +399,12 @@ Devido à remoção dos nodos e consequentemente a perda de **`r rem_nod`** liga
 
 O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q2), 0)`** ligações.
 
+-   **Grau Médio**: `r round(mean(graus_q2), 2)`
+-   **Mediana** : `r median(graus_q2)`
+-   **Mínimo** : `r min(graus_q2)`
+-   **Máximo** : `r max(graus_q2)`
+-   **1o Quartil** : `r quantile(graus_q2,0.25)`
+-   **3o Quartil** : `r quantile(graus_q2,0.75)`
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
@@ -424,10 +430,31 @@ hist(graus_q2[graus_q2 > 10], breaks = "FD", col = "lightgreen",
 
 par(mfrow = c(1, 1))
 
-mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 2)
+mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 1.8)
 ```
 
-A distribuição de grau mostra valores entre **`r min(graus_q2)`** e **`r max(graus_q2)`**, com quartis **Q1=`r quantile(graus_q2, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q2)`** e **Q3=`r quantile(graus_q2, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q2, probs = 0.25))` e `r round(quantile(graus_q2, probs = 0.75))` ligações.
+```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Nova Rede", fig.pos='H', fig.align='center'}
+
+# Reduz margens
+par(mar = c(5, 4, 4, 2) + 0.1)
+
+boxplot(graus_q2,
+        horizontal = TRUE,
+        col = "lightblue",
+        border = "darkblue",
+        main = "Boxplot da Distribuição de Graus na Nova Rede",
+        xlab = "Número de Interações",
+        ylab = "",
+        las = 1,
+        outcol = "red")
+
+abline(v = median(graus_q2), col = "red", lwd = 2, lty = 2)
+
+legend("topright", legend = paste("Mediana =", median(graus_q2)),
+       col = "red", lwd = 2, lty = 2, bty = "n")
+
+grid(nx = NULL, ny = NA, col = "gray90", lty = "dotted")
+```
 
 **V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
