@@ -377,7 +377,9 @@ Este valor indica a tendência dos nodos da rede formarem triângulos, ou seja, 
 
 Com base no valor obtido, conclui-se então que existe uma formação de triângulos na rede, embora não de forma muito intensa, o que é consistente com redes do tipo *preferential attachment*, onde a estrutura tende a ser menos agrupada em pequenos clusters fortemente conectados.
 
+
 # Parte II - Q2
+
 
 **I) Indique o número de ligações removidas;**
 
