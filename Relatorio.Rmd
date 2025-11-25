@@ -55,8 +55,8 @@ plot(
 -   **Mediana** : `r median_festa`
 -   **Mínimo** : `r min_festa`
 -   **Máximo** : `r max_festa`
--   **1o Quartil** : `r q1_festa`
--   **3o Quartil** : `r q3_festa`
+-   **1º Quartil** : `r q1_festa`
+-   **3º Quartil** : `r q3_festa`
 -   **Heterogeneidade** : `r heterogeneity_festa`
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
@@ -200,7 +200,7 @@ counts <- as.character(as.numeric(dim_conchas))
 
 tabela <- rbind(
 c("k-core", kcores),
-c("Número de nodos", counts)
+c("Nº de nodos", counts)
 )
 
 kable(tabela, caption = "Distribuição de k-cores na rede", align = "c")
@@ -403,8 +403,8 @@ O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média
 -   **Mediana** : `r median(graus_q2)`
 -   **Mínimo** : `r min(graus_q2)`
 -   **Máximo** : `r max(graus_q2)`
--   **1o Quartil** : `r quantile(graus_q2,0.25)`
--   **3o Quartil** : `r quantile(graus_q2,0.75)`
+-   **1º Quartil** : `r quantile(graus_q2,0.25)`
+-   **3º Quartil** : `r quantile(graus_q2,0.75)`
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
