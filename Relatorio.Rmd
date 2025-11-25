@@ -381,7 +381,7 @@ Com base no valor obtido, conclui-se então que existe uma formação de triâng
 
 **I) Indique o número de ligações removidas;**
 
-Após a remoção do nodos selecionados aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede.
+Após a remoção das ligações selecionadas aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede.
 
 **II) Determine a densidade e classifique a rede;**
 
@@ -403,6 +403,29 @@ O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média
 -   **Máximo** : `r max(graus_q2)`
 -   **1o Quartil** : `r quantile(graus_q2,0.25)`
 -   **3o Quartil** : `r quantile(graus_q2,0.75)`
+
+```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Nova Rede", fig.pos='H', fig.align='center'}
+
+# Reduz margens
+par(mar = c(5, 4, 4, 2) + 0.1)
+
+boxplot(graus_q2,
+        horizontal = TRUE,
+        col = "lightblue",
+        border = "darkblue",
+        main = "Boxplot da Distribuição de Graus na Nova Rede",
+        xlab = "Número de Interações",
+        ylab = "",
+        las = 1,
+        outcol = "red")
+
+abline(v = median(graus_q2), col = "red", lwd = 2, lty = 2)
+
+legend("topright", legend = paste("Mediana =", median(graus_q2)),
+       col = "red", lwd = 2, lty = 2, bty = "n")
+
+grid(nx = NULL, ny = NA, col = "gray90", lty = "dotted")
+```
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
@@ -431,28 +454,7 @@ par(mfrow = c(1, 1))
 mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 1.8)
 ```
 
-```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Nova Rede", fig.pos='H', fig.align='center'}
 
-# Reduz margens
-par(mar = c(5, 4, 4, 2) + 0.1)
-
-boxplot(graus_q2,
-        horizontal = TRUE,
-        col = "lightblue",
-        border = "darkblue",
-        main = "Boxplot da Distribuição de Graus na Nova Rede",
-        xlab = "Número de Interações",
-        ylab = "",
-        las = 1,
-        outcol = "red")
-
-abline(v = median(graus_q2), col = "red", lwd = 2, lty = 2)
-
-legend("topright", legend = paste("Mediana =", median(graus_q2)),
-       col = "red", lwd = 2, lty = 2, bty = "n")
-
-grid(nx = NULL, ny = NA, col = "gray90", lty = "dotted")
-```
 
 **V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
