@@ -397,6 +397,12 @@ Devido à remoção dos nodos e consequentemente a perda de **`r rem_nod`** liga
 
 O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q2), 0)`** ligações.
 
+-   **Grau Médio**: `r round(mean(graus_q2), 2)`
+-   **Mediana** : `r median(graus_q2)`
+-   **Mínimo** : `r min(graus_q2)`
+-   **Máximo** : `r max(graus_q2)`
+-   **1o Quartil** : `r quantile(graus_q2,0.25)`
+-   **3o Quartil** : `r quantile(graus_q2,0.75)`
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
