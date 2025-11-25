@@ -343,7 +343,7 @@ Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar tod
 
 O grau médio da rede é de **`r round(mean(graus_q1), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q1), 0)`** ligações.
 
-A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2/Mediana=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações.
+A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações.
 
 **IV) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
@@ -391,9 +391,41 @@ A nova rede é também **muito esparsa** e sendo ainda mais esparsa do que a ori
 
 **III) Indique se a rede é conexa;**
 
-Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar todos os outros nodos da rede. Devido à remoção dos nodos e consequentemente a perda de **`r rem_nod`** ligações, a nova rede deixou de ser conexa, pois um nodo perdeu todas a ligações ficando isolado da rede.
+Devido à remoção dos nodos e consequentemente a perda de **`r rem_nod`** ligações, a nova rede deixou de ser conexa, pois um nodo perdeu todas a ligações ficando isolado da rede.
 
 **IV) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
+
+O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q2), 0)`** ligações.
+
+
+```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
+
+par(mfrow = c(1, 2), oma = c(0, 0, 3, 0)) 
+
+hist(graus_q2, breaks = "FD", col = "skyblue",
+     xlim = c(0, 10),
+     main = "Entre 0 e 10",
+     xlab = " Grau (Número de Interações)",
+     ylab = "Frequência")
+
+abline(v = mean(graus_q2), col = "red", lwd = 2)
+abline(v = median(graus_q2), col = "blue", lwd = 2)
+
+
+legend("topright", legend = c("Média", "Mediana"), col = c("red", "blue"), lwd = 2,
+       bg = "white")
+
+hist(graus_q2[graus_q2 > 10], breaks = "FD", col = "lightgreen",
+     main = "Cauda (Grau > 10)",
+     xlab = "Grau",
+     ylab = "Frequência")
+
+par(mfrow = c(1, 1))
+
+mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 2)
+```
+
+A distribuição de grau mostra valores entre **`r min(graus_q2)`** e **`r max(graus_q2)`**, com quartis **Q1=`r quantile(graus_q2, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q2)`** e **Q3=`r quantile(graus_q2, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q2, probs = 0.25))` e `r round(quantile(graus_q2, probs = 0.75))` ligações.
 
 **V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
