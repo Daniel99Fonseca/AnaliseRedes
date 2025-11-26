@@ -315,67 +315,157 @@ O **nodo** com o maior grau é considerado o mais social devido ao elevado núme
 
 ### Contextualização
 
-Foi nos pedida a criação de uma rede aleatória através do *Igraph*, na qual devem existir 500 nodos e cerca de 1000 ligações.
+Foi nos pedida a criação de uma rede aleatória através do *Igraph*, usando o modelo _Preferential Attachment_ (PA) na qual devem existir **500 nodos** e cerca de **1000 ligações**. 
+Este modelo, que gera uma componente gigante que integra a maioria dos nodos, reflete a estrutura de muitas redes reais, como redes sociais.
 
-```{r fig_rede_q1, fig.width=8, fig.height=8, echo=FALSE}
-# Modelo Preferential-Attachment
-# 500 nodos, ~1000 ligações
-set.seed(5158)
+Para tal, gerou-se a rede através da função `sample_pa(n = 500, m = 2, directed = FALSE)`. O paramêmtro `n = 500` para os 500 nodos ; No modelo PA, cada novo nó, **n** liga-se a **m** nós já existentes. Como o número total de arestas aproximado é: arestas = n * m, então `m = 2` ; `directed = FALSE` dado que a rede é não direcionada.
 
-rede_q1 <- sample_pa(n = 500, power = 1, m = 2, directed = FALSE)
+```{r fig.width=6, fig.height=6, echo=FALSE, fig.cap = 'Rede Aleatória Q1, gerada pelo Modelo Preferential Attachment', fig.pos='H'}
 
 plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
-```
 
-**Figura 2** Rede Aleatória, Modelo Preferential-Attachment
+```
 
 **I) Detemine a densidade e classifique a rede;**
 
-A densidade da rede aleatória criada é de **`r round(densidade_pa, 3)`**, isto é, dentro desta rede apenas existem **`r round(densidade_pa * 100, 3)`%** das ligações possíveis.
+A densidade da rede gerada pelo modelo PA criada é de **`r round(densidade_pa, 3)`**, isto é, dentro desta rede apenas existem **`r round(densidade_pa * 100, 3)`%** das ligações possíveis.
 
-Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede muito esparsa**.
+Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede esparsa**. 
+
+Esta baixa densidade é típica de redes geradas por modelos de crescimento preferencial, dado que poucos nodos acumulam muitas ligações enquanto a maioria permanece pouco conectada, resultando numa estrutura global muito esparsa.
 
 **II) Indique se a rede é conexa;**
 
-Uma rede é conexa se apartir de qualquer nodo na rede seja possível chegar todos os outros nodos da rede, e como este é o caso para a rede criada, logo podemos dizer que a rede é conexa.
+Uma rede é conexa se, a partir de qualquer nodo na rede, seja possível alcançar qualquer outro nodo da rede - através das suas ligações. Este facto verifica-se para a rede criada, através do comando `is_connected(rede_q1)`, o que retornou `TRUE`, logo a rede é conexa.
 
 **III) Obtenha o grau médio e a distribuição de grau. Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;**
 
 O grau médio da rede é de **`r round(mean(graus_q1), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q1), 0)`** ligações.
 
-A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações.
+A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações. Os quartis permitem observar a dispersão dos graus, evidenciando a heterogeneidade típica do modelo Preferential Attachment. 
+
+As estatísticas descritivas mostram que a mediana do grau é menor que a média, refletindo que a maioria dos nodos possui poucas ligações, enquanto alguns nodos (hubs) apresentam um número elevado de ligações.
+
+```{r fig.width=6, fig.height=4, echo=FALSE, fig.cap = 'Distribuição Acumulada de Grau'}
+
+plot(cdf, main = "Distribuição acumulada de grau",
+     xlab = "Grau", ylab = "Fração de nodos ≤ k",
+     verticals = TRUE, do.points = FALSE)
+```
+
+A Figura X confirma que a rede apresenta muitos nodos com baixo grau e poucos nodos altamente conectados.
+
+Esta distribuição de grau é característica do modelo **PA** e é importante para compreender a presença de hubs e as potenciais influências e propagação de informação dentro da rede.
 
 **IV) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
-O parâmetro de heterogeneidade mede o quão desigual é a distribuição de graus da rede.Para a rede gerada, o valor obtido foi de **`r round(H, 3)`**.
+O parâmetro de heterogeneidade, calculado através da divisão do grau quadrado médio (`grau2_medio`) pelo grau médio ao quadrado (`grau_medio^2`), mede o quão desigual é a distribuição de graus da rede. Para a rede gerada, o valor obtido foi de **`r round(H, 3)`**.
 
-Como este valor é superior a 1, indica que a rede é **bastante heterogénea**, ou seja, existe uma grande variação no número de ligações entre os nodos. A maioria dos nodos apresenta poucos contactos, enquanto um pequeno número de nodos concentra um número muito elevado de ligações.
+Como este valor é superior a 1, indica que a rede é **heterogénea**, ou seja, existe uma grande variação no número de ligações entre os nodos. Sendo que o número é relativamente elevado, podemos ainda concluir que há a existência de hubs.
 
-Isto é característico do modelo de *preferential attachment*, onde nós mais antigos tendem a acumular mais ligações ao longo do tempo.
+Assim, A maioria dos nodos apresenta poucos contactos, enquanto um pequeno número de nodos concentra um número muito elevado de ligações, característica do modelo de *preferential attachment*, onde nós mais antigos tendem a acumular mais ligações ao longo do tempo.
+
+Na figura X, podemos observar os nodos com número de ligações acima do 3o Quartil, que consideramos os **hubs** da rede
+
+```{r fig.width=8, fig.height=6, echo=FALSE, fig.cap = 'Nodos acima de 3o Quartil', fig.pos='H'}
+layout <- layout_with_fr(rede_q1, niter = 2000)
+vertex_sizes <- pmin(graus_q1 + 2, 6)  # limita tamanho máximo
+plot(rede_q1, layout = layout,
+     vertex.size = vertex_sizes,
+     vertex.color = ifelse(graus_q1 > quantile(graus_q1, 0.75), "red", "skyblue"),
+     vertex.label = NA,
+     edge.color = "grey",
+     margin = 0,
+     main="Nodos acima do 3o Quartil")
+
+```
 
 **V) Estude a associação de grau e indique o que poderá concluir-se;**
 
 A associação de grau avalia se nodos com muitas ligações tendem a ligar-se a outros nodos também com várias ligações (rede assortativa) ou se, pelo contrário, se ligam a nodos com poucas ligações (rede desassortativa).
 
-A associação de grau foi calculada, tendo sido obtido o valor de **`r round(assor, 3)`**. Como o valor é **negativo**, conclui-se que a rede é **desassortativa**, o que significa que os nodos com grau mais elevado tendem a ligar-se preferencialmente a nodos com grau mais baixo.
+A associação de grau foi calculada, através da função `assortativity_degree(rede_q1, directed=FALSE)` tendo sido obtido o valor de **`r round(assor, 3)`**.
 
-Este comportamento é típico de redes geradas pelo modelo de *preferential attachment*, nas quais existem alguns nós altamente conectados (hubs) que funcionam como pontos centrais de ligação para muitos nós periféricos com poucas ligações.
+Como o valor é **negativo**, conclui-se que a rede é **desassortativa**, significando que os nodos com grau mais elevado tendem a ligar-se a nodos com grau mais baixo, enquanto a maioria destes últimos não se conecta preferencialmente entre si, como se pode comprovar pela tendência negativa da figura X.
+
+```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Grau do nó vs Grau médio dos vizinhos rede Q1", fig.pos='H'}
+
+# Gráfico
+plot(graus_q1,
+     knn_vals_q1, 
+     pch=19,
+     cex=1.2,              # tamanho dos pontos
+     col=rgb(0,0,1,0.6),   # azul
+     xlab="Grau do nodo", 
+     ylab="Grau médio dos vizinhos",
+     main="Grau do nodo vs Grau médio dos vizinhos")
+
+abline(lm(knn_vals_q1 ~ graus_q1), col="red", lwd=2)
+
+legend("topright", legend="Regressão Linear", col="red", lwd=2, bty="n")
+grid()
+```
+Este comportamento é típico de redes geradas pelo modelo de *preferential attachment*, nas quais existem alguns nós altamente conectados (hubs) que funcionam como pontos centrais de ligação para muitos nós periféricos com poucas ligações. A disassortatividade sugere que a rede é eficiente na conectividade geral e espalha de informação, mas também que os hubs são pontos críticos cuja falha pode fragmentar a rede.
 
 **VI) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
 
-A média dos comprimentos dos caminhos mais curtos obtida foi de **`r round(avg_path, 3)`**, enquanto o diâmetro da rede foi de **`r diam`**.
+Calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance()` obtendo-se um valor de **`r round(avg_path, 3)`**, enquanto o diâmetro da rede foi de **`r diam`**. Como visto anteriormente, a rede é conexa, logo o diâmetro é calculado sobre a rede inteira. Caso não fosse, era preciso calcular a componente gigante e consequentemente, o seu diâmetro. 
 
-Estes resultados indicam que, em média, são necessários cerca de **`r round(avg_path, 2)`** passos para ligar dois nodos da rede. O diâmetro confirma que mesmo os nodos mais distantes estão separados por um número reduzido de passos.
+Em média, são necessários cerca de **`r round(avg_path, 2)`** passos para ligar dois nodos da rede. Estes resultados indicam um comportamento de _small-world_. Apesar do grande número de nodos, qualquer par de nodos está separado por um pequeno número de passos, devido à presença de _hubs_ - caraterística do modelo PA. O diâmetro indica o maior caminho dos caminhos mais curtos, e confirma que mesmo os nodos mais distantes estão separados por um número reduzido de passos, ilustrado na Figura abaixo.
 
-Assim, conclui-se que a rede apresenta uma elevada eficiência em termos de conectividade, o que por si só mostra características típicas de redes do tipo *small-world*.
+```{r echo=FALSE, fig.width=9, fig.height=6, fig.cap="Diâmetro da Rede Q1", fig.pos='H'}
+# Encontrar os dois nodos que definem o diâmetro e o caminho entre eles
+dia_path <- get_diameter(rede_q1, directed = FALSE)
+
+# criar estilos de nodos
+vertex_colors <- rep("#D3D3D350", vcount(rede_q1))
+vertex_sizes  <- rep(4, vcount(rede_q1))
+
+# destacar nodos do diâmetro
+vertex_colors[dia_path] <- "red"
+vertex_sizes[dia_path]  <- 10
+
+# criar estilos de arestas
+edge_colors <- rep("#00000020", ecount(rede_q1))
+edge_widths <- rep(0.5, ecount(rede_q1))
+
+# destacar arestas do diâmetro
+dia_edges <- E(rede_q1, path = dia_path)
+edge_colors[dia_edges] <- "orange"
+edge_widths[dia_edges] <- 3
+
+# 4) Layout estável
+layout <- layout_with_fr(rede_q1)
+
+# 5) Plot final
+plot(
+  rede_q1,
+  layout = layout,
+  vertex.color = vertex_colors,
+  vertex.size = vertex_sizes,
+  vertex.label = NA,
+  edge.color = edge_colors,
+  edge.width = edge_widths,
+  main = paste("Caminho do Diâmetro da Rede (", diam, " passagens)", sep = "")
+)
+```
+
+Assim, conclui-se que a rede apresenta uma elevada eficiência em termos de conectividade, o que por si só mostra características típicas de redes do tipo **small-world**.
 
 **VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
 
-O coeficiente de clustering da rede foi calculado através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
+O coeficiente de _clustering_ indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si.
 
-Este valor indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si. 
+Os coeficientes - local e global - da rede foi calculado através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
 
-Com base no valor obtido, conclui-se então que existe uma formação de triângulos na rede, embora não de forma muito intensa, o que é consistente com redes do tipo *preferential attachment*, onde a estrutura tende a ser menos agrupada em pequenos clusters fortemente conectados.
+Também se realizou a contagem direta de triângulos, em percentagem, o que retornou o valor de **`r round(pct_with_triangles, 2)`**%.
+
+Com base nos valores baixos de transitividade obtidos, inferimos que os triângulos são pouco frequentes na rede. Os vizinhos de um nodo têm **baixa tendência** a estar ligados entre si.
+Este padrão é coerente com o modelo PA, que tende a gerar redes com _hubs_, reduzindo a formação de triângulos. 
+
+Assim, a rede Q1 favorece caminhos curtos através de _hubs_, no entanto, impede a formação de comunidades interligadas. 
+Em termos práticos, influenciar-se-ia processos de redundância de informação como, por exemplo, informação que poderá propagar-se rapidamente via _hubs_ mas sem redundância local garantida por triângulos, ou seja, como os vizinhos de um _hub_ não estão muito ligados entre si, se uma aresta falha, a informação perde um possível caminho alternativo e a transmissão fica mais dependente dos _hubs_.
+Logo, concluímos que a informação chega rapidamente a muitas partes da rede, devido aos hubs, mas não existem pequenos ciclos (triângulos) que reforcem a conetividade local.
 
 
 # Parte II - Q2
@@ -406,7 +496,7 @@ O grau médio da rede é de **`r round(mean(graus_q2), 2)`**, ou seja, em média
 -   **1º Quartil** : `r quantile(graus_q2,0.25)`
 -   **3º Quartil** : `r quantile(graus_q2,0.75)`
 
-```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Nova Rede", fig.pos='H', fig.align='center'}
+```{r echo=FALSE, fig.width=6, fig.height=3.5, fig.cap="Boxplot da distribuição de graus na Nova Rede", fig.pos='H'}
 
 # Reduz margens
 par(mar = c(5, 4, 4, 2) + 0.1)

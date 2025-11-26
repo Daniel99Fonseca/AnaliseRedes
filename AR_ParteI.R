@@ -92,7 +92,7 @@ lc <- cluster_louvain(g_festa)
 
 #### Variáveis auxiliares para gráficos
 
-# Identificar nó com maior betweenness
+# Nó com maior betweenness
 nodo_top <- which.max(bet)
 
 membership_lc <- membership(lc)
@@ -105,14 +105,14 @@ membership_lc[top_hubs]
 
 ############################ PARTE II #######################################
 ############
-#### Q1 #### seed <- 5158
+#### Q1 #### seed <- 5158 (aluno Daniel Fonseca n. 125158)
 ############
 
 # Modelo Preferential-Attachment
 # n(odes) = 500 nodos
 # e(dges) = 1000 ligacoes
 set.seed(5158)
-rede_q1 <- sample_pa(n = 500, power = 1, m = 2, directed = FALSE)
+rede_q1 <- sample_pa(n = 500, m = 2, directed = FALSE)
 
 ecount(rede_q1)
 
@@ -135,7 +135,7 @@ avg_grau <- mean(graus_q1)
 summary(graus_q1)
 
 # Difícil visualização
-hist(graus_q1, breaks = 30, col = "skyblue",
+hist(graus_q1, breaks = 20, col = "skyblue",
      main = "Distribuição de Graus",
      xlab = "Grau (número de ligações)",
      ylab = "Número de nodos")
@@ -143,11 +143,6 @@ hist(graus_q1, breaks = 30, col = "skyblue",
 # Calcular distribuição acumulada
 graus_sorted <- sort(graus_q1)
 cdf <- ecdf(graus_sorted)
-
-# Plot CDF
-plot(cdf, main = "Distribuição acumulada de grau",
-     xlab = "Grau", ylab = "Fração de nodos ≤ k",
-     verticals = TRUE, do.points = FALSE)
 
 
 # iv) - Calcule o parâmetro de heterogeneidade. 
@@ -157,28 +152,12 @@ grau2_medio <- mean(graus_q1^2)
 
 H <- grau2_medio / (grau_medio^2) # H = 2.13!
 
-Q3 <- quantile(graus_q1, 0.75)
-sum(graus_q1 > Q3)        # número de nodos acima de Q3
-sum(graus_q1 > Q3) / length(graus_q1) * 100  # percentual da rede
-
-sum(graus_q1 > 10)
-sum(graus_q1 > 10) / length(graus_q1) * 100
-hubs <- graus_q1 > 10
-
-
-layout <- layout_with_fr(rede_q1, niter = 2000)
-vertex_sizes <- pmin(graus_q1 + 2, 6)  # limita tamanho máximo
-plot(rede_q1, layout = layout,
-     vertex.size = vertex_sizes,
-     vertex.color = ifelse(graus_q1 > quantile(graus_q1, 0.75), "red", "skyblue"),
-     vertex.label = NA,
-     edge.color = "grey",
-     margin = 0)
-
 # v) Estude a associação de grau e indique o que poderá concluir-se;
 
 assor <- assortativity_degree(rede_q1, directed=FALSE)
 assor # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
+
+knn_vals_q1 <- knn(rede_q1)$knn
 
 # vi) - Determine a média dos comprimentos dos caminhos mais curtos e 
 # o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
@@ -191,20 +170,37 @@ diam
 
 # vii) - Determine os coeficientes de clustering da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos.
+# Transitividade global
+trans_global <- transitivity(rede_q1, type = "global")    # razão de triângulos fechados / triplets
+trans_global
+
+# Coeficiente local
+clust_local <- transitivity(rede_q1, type = "local")
+
+# coef local media
 clust_media <- transitivity(rede_q1, type = "average")
 clust_media
 
+# Percentagem de nodos com clustering > 0
+pct_with_triangles <- sum(clust_local > 0) / length(clust_local) * 100
+pct_with_triangles
+
 ############
-#### Q2 #### seed <- 5158
+#### Q2 #### seed <- 5158 (aluno Daniel Fonseca n. 125158)
 ############
 
-prob_rem <- 0.1 #probabilidade do nodo ser removido
+# probabilidade do nodo ser removido
+prob_rem <- 0.1 
 
-rem_func <- runif(ecount(rede_q1)) < prob_rem #escolhe os nodos a ser removidos (lista de [TRUE, FALSE, TRUE, TRUE...])
+# escolhe os nodos a ser removidos (lista de [TRUE, FALSE, TRUE, TRUE...])
+rem_func <- runif(ecount(rede_q1)) < prob_rem 
 
-nod_rem <- E(rede_q1)[rem_func] #guarda os nodos removidos
+# guarda os nodos removidos
+nod_rem <- E(rede_q1)[rem_func] 
 
-rede_q2 <- delete_edges(rede_q1, nod_rem) #remover os nodos selecionados aleatóriamente da rede
+# remover os nodos selecionados aleatóriamente da rede
+rede_q2 <- delete_edges(rede_q1, nod_rem) 
+
 
 ecount(rede_q1) #997 ligações
 ecount(rede_q2) #895 ligações
@@ -231,7 +227,8 @@ graus_q2 <- degree(rede_q2)
 avg_grau <- mean(graus_q2)
 summary(graus_q2)
 
-# v) - Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;
+# v) - Calcule o parâmetro de heterogeneidade. 
+# Indique o que pode concluir quanto à existência de hubs;
 grau_medio_q2 <- mean(graus_q2)
 grau2_medio_q2 <- mean(graus_q2^2)
 
@@ -251,14 +248,16 @@ plot(cdf_q2, main = "Distribuição acumulada de grau",
 assor_q2 <- assortativity_degree(rede_q2, directed=FALSE)
 assor_q2 # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
 
-# vii) - Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
+# vii) - Determine a média dos comprimentos dos caminhos mais curtos e o 
+# diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
 avg_path_q2 <- mean_distance(rede_q2, directed = FALSE)
 avg_path_q2
 
 diam_q2 <- diameter(rede_q2, directed = FALSE)
 diam_q2
 
-# viii) - Determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;
+# viii) - Determine o coeficiente de clustering da rede. 
+# Diga o que pode concluir-se quanto à existência de triângulos;
 clust_media_q2 <- transitivity(rede_q2, type = "average")
 clust_media_q2
 
