@@ -458,7 +458,7 @@ par(mfrow = c(1, 1))
 
 mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 1.8)
 ```
-
+Apesar de haver nodos com graus bastante elevados em comparação com a mediana, o valor da média é mais aproximado da mediana pelo motivo de haver uma quantidade muito mais elevada de nodos com gruas perto do valor da mediana do que nodos com valores elevados.
 
 
 **V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
