@@ -429,6 +429,9 @@ legend("topright", legend = paste("Mediana =", median(graus_q2)),
 grid(nx = NULL, ny = NA, col = "gray90", lty = "dotted")
 ```
 
+Como é possivél observar na figura 9 a distribuição é bastante assimétrica à direita, o
+que indica que a grande maioria dos nodes tem poucas ligações.
+
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
 par(mfrow = c(1, 2), oma = c(0, 0, 3, 0)) 
