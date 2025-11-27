@@ -189,16 +189,16 @@ pct_with_triangles
 #### Q2 #### seed <- 5158 (aluno Daniel Fonseca n. 125158)
 ############
 
-# probabilidade do nodo ser removido
+# probabilidade da ligação de ser removido
 prob_rem <- 0.1 
 
-# escolhe os nodos a ser removidos (lista de [TRUE, FALSE, TRUE, TRUE...])
+# escolhe as ligações a ser removidas (lista de [TRUE, FALSE, TRUE, TRUE...])
 rem_func <- runif(ecount(rede_q1)) < prob_rem 
 
-# guarda os nodos removidos
+# guarda as ligações a ser removidas
 nod_rem <- E(rede_q1)[rem_func] 
 
-# remover os nodos selecionados aleatóriamente da rede
+# remove as ligações selecionadas aleatóriamente da rede
 rede_q2 <- delete_edges(rede_q1, nod_rem) 
 
 
