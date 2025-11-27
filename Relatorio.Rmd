@@ -456,7 +456,7 @@ Assim, conclui-se que a rede apresenta uma elevada eficiência em termos de cone
 
 O coeficiente de _clustering_ indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si.
 
-Os coeficientes - local e global - da rede foi calculado através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
+Os coeficientes - local e global - da rede foram calculados através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
 
 Também se realizou a contagem direta de triângulos, em percentagem, o que retornou o valor de **`r round(pct_with_triangles, 2)`**%.
 
@@ -563,28 +563,60 @@ Como este valor continua superior a 1, então a nova rede mantem-se heterogénea
 
 A associação de grau foi novamente calculada, através da função `assortativity_degree(rede_q2, directed=FALSE)` tendo sido obtido o valor de `r assor_q2`.
 
-O valor fica novamente **negativo**, concluindo que a rede continua **desassortativa**, o que já era de se esperar, pq ao remover ligações numa rede seria estranho a rede tornar se assortativa. enquanto a maioria destes últimos não se conecta
+O valor fica novamente **negativo**, concluindo que a rede continua **desassortativa**, o que já era de se esperar, porque ao remover ligações numa rede, seria estranho a rede tornar se assortativa. enquanto a maioria destes últimos não se conecta
 preferencialmente entre si, como se pode comprovar pela tendência negativa da figura X.
 
-```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Grau do nó vs Grau médio dos vizinhos rede Q1", fig.pos='H'}
 
-# Gráfico
-plot(graus_q2,
-     knn_vals_q2, 
-     pch=19,
-     cex=1.2,              # tamanho dos pontos
-     col=rgb(0,0,1,0.6),   # azul
-     xlab="Grau do nodo", 
-     ylab="Grau médio dos vizinhos",
-     main="Grau do nodo vs Grau médio dos vizinhos")
-
-abline(lm(knn_vals_q2 ~ graus_q2), col="red", lwd=2)
-
-legend("topright", legend="Regressão Linear", col="red", lwd=2, bty="n")
-grid()
-```
 **VII) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
+
+ Novamente calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance(rede_q2, directed = FALSE)` obtendo-se um valor de **`r round(avg_path_q2, 3)`**, enquanto o diâmetro da rede foi de **`r diam_q2`**. A nova rede - como referido anteriormente - não é conexa. Desta forma, o seu diâmetro é equivalente ao diâmetro da componente gigante, cálculo este que é efetuado automaticamente pelo pacote _igraph_.
+ 
+```{r echo=FALSE, fig.width=9, fig.height=6, fig.cap="Diâmetro da Rede Q1", fig.pos='H'}
+# Encontrar os dois nodos que definem o diâmetro e o caminho entre eles
+dia_path <- get_diameter(rede_q2, directed = FALSE)
+
+# criar estilos de nodos
+vertex_colors <- rep("#D3D3D350", vcount(rede_q2))
+vertex_sizes  <- rep(4, vcount(rede_q2))
+
+# destacar nodos do diâmetro
+vertex_colors[dia_path] <- "red"
+vertex_sizes[dia_path]  <- 10
+
+# criar estilos de arestas
+edge_colors <- rep("#00000020", ecount(rede_q2))
+edge_widths <- rep(0.5, ecount(rede_q2))
+
+# destacar arestas do diâmetro
+dia_edges <- E(rede_q2, path = dia_path)
+edge_colors[dia_edges] <- "orange"
+edge_widths[dia_edges] <- 3
+
+# 4) Layout estável
+layout <- layout_with_fr(rede_q2)
+
+# 5) Plot final
+plot(
+  rede_q2,
+  layout = layout,
+  vertex.color = vertex_colors,
+  vertex.size = vertex_sizes,
+  vertex.label = NA,
+  edge.color = edge_colors,
+  edge.width = edge_widths,
+  main = paste("Caminho do Diâmetro da Rede (", diam, " passagens)", sep = "")
+)
+```
+Na figura X, é possivel observar o maior caminho dos caminhos mais curtos (diâmetro).
 
 **VIII) Determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;**
 
+Os coeficientes - local e global - da nova rede foram calculados através da função `transitivity(rede_q2, type = "global")`, tendo sido obtido o valor de clustering médio de **`r clust_global_q2`**.
+
+Realizou se novamente a contagem direta de triângulos, em percentagem, o que retornou o valor de **`r pct_with_triangles_q2`**.
+
+A nova rede cria percursos curtos graças aos hubs, mas dificulta a formação de comunidades ligadas entre si. A informação propaga-se rapidamente através dos hubs, porém sem redundância local: como os vizinhos dos hubs quase não se ligam entre si, a falha de uma aresta pode quebrar caminhos alternativos. Assim, a rede é rápida a difundir informação, mas carece de pequenos ciclos que reforcem a conectividade local.
+
 **IX)  Compare os resultados obtidos antes e após a remoção de ligações.**
+
+

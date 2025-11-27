@@ -109,8 +109,8 @@ membership_lc[top_hubs]
 ############
 
 # Modelo Preferential-Attachment
-# n(odes) = 500 nodos
-# e(dges) = 1000 ligacoes
+# nodes = 500 nodos
+# edges = 1000 ligacoes
 set.seed(5158)
 rede_q1 <- sample_pa(n = 500, m = 2, directed = FALSE)
 
@@ -150,7 +150,8 @@ cdf <- ecdf(graus_sorted)
 grau_medio <- mean(graus_q1)
 grau2_medio <- mean(graus_q1^2)
 
-H <- grau2_medio / (grau_medio^2) # H = 2.13!
+H <- grau2_medio / (grau_medio^2) # H = 2.13
+H
 
 # v) Estude a associação de grau e indique o que poderá concluir-se;
 
@@ -203,7 +204,7 @@ rede_q2 <- delete_edges(rede_q1, nod_rem)
 
 
 ecount(rede_q1) #997 ligações
-ecount(rede_q2) #895 ligações
+ecount(rede_q2) #889 ligações
 
 # plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
 
@@ -232,7 +233,7 @@ summary(graus_q2)
 grau_medio_q2 <- mean(graus_q2)
 grau2_medio_q2 <- mean(graus_q2^2)
 
-H_q2 <- grau2_medio / (grau_medio^2) # H <- 2.01
+H_q2 <- grau2_medio_q2 / (grau_medio_q2^2) # H <- 2.15
 H_q2
 
 # Calcular distribuição acumulada
@@ -246,7 +247,8 @@ plot(cdf_q2, main = "Distribuição acumulada de grau",
 
 # vi) - Estude a associação de grau e indique o que poderá concluir-se;
 assor_q2 <- assortativity_degree(rede_q2, directed=FALSE)
-assor_q2 # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
+assor_q2# r < 0 é disassociativa, logo os hubs não estão conetados entre si.
+
 
 # vii) - Determine a média dos comprimentos dos caminhos mais curtos e o 
 # diâmetro da rede. Indique o que pode concluir-se quanto à distância média;
@@ -258,22 +260,39 @@ diam_q2
 
 # viii) - Determine o coeficiente de clustering da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos;
+clust_global_q2 <- transitivity(rede_q2, type = "global")
+clust_global_q2
+
+# Coeficiente local
+clust_local_q2 <- transitivity(rede_q2, type = "local")
+
+# coef local media
 clust_media_q2 <- transitivity(rede_q2, type = "average")
 clust_media_q2
 
+# Percentagem de nodos com clustering > 0
+pct_with_triangles_q2 <- sum(clust_local_q2 > 0) / length(clust_local_q2) * 100
+pct_with_triangles_q2
+
 # ix) - Compare os resultados obtidos antes e após a remoção de ligações;
+
+tabela <- data.frame(
+  Densidade=c(densidade_pa, densidade_q2), 
+  
+)
+rownames(tabela)<-c("rede Q1","rede Q2")
 
 #i) aumento de esparsidade 0.008 -> 0.007
 
 #ii) deixa de ser conectada -> 1 nodo passou a ser isolado
 
 #iii) Min. 1st Qu.  Median    Mean 3rd Qu.    Max.  -> Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#    2.000   2.000   3.000   3.988   4.000  33.000     0.000   2.000   2.000   3.632   4.000  27.000
+#    2.000   2.000   3.000   3.988   4.000  47.000     0.000   2.000   2.000   3.556   4.000  41.000
 
-#iv) Heterogenidade_q1 <- 2.13 => Heterogenidade_q2 <- 2.01 
+#iv) Heterogenidade_q1 <- 2.13 => Heterogenidade_q2 <- 2.15
 # graus com mais ligações têm mais chance de perder ligações quando removemos nodos aleatóriamente, logo menor desigualdade de ligações entre nodos.
 
-#v) Assortatividade_q1 <- -0.115 => Assortatividade_q2 <- -0.146
+#v) Assortatividade_q1 <- -0.064 => Assortatividade_q2 <- -0.057
 # A rede passou a ter menor tendência para conectar nós com graus semelhantes.
 
 #vi) Aumento da distância média e do diâmetro da rede devido à remoção de "atalhos".
