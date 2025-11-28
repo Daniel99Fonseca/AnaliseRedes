@@ -276,11 +276,21 @@ pct_with_triangles_q2
 
 # ix) - Compare os resultados obtidos antes e após a remoção de ligações;
 
-tabela <- data.frame(
-  Densidade=c(densidade_pa, densidade_q2), 
-  
-)
-rownames(tabela)<-c("rede Q1","rede Q2")
+x<-c("rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2")
+y<-c("Densidade","Densidade","Conexa","Conexa","Grau Médio","Grau Médio","Min","Min","Max","Max")
+valores <- c(0.008,0.007,"Sim","Não",3.99,3.56,2,0,47,41)
+y <- factor(y, levels = unique(y))
+Tabela1 <- tapply(valores, list(x, y), function(z) as.character(z))
+Tabela1 <- as.matrix(Tabela1)
+Tabela1
+
+s<-c("rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2")
+t<-c("Mediana","Mediana","Heterogeneidade","Heterogeneidade","Associação de grau","Associação de grau","Diâmetro","Diâmetro","Coeficiente de clustering","Coeficiente de clustering")
+va<-c(3,2,2.13,2.15,-0.064,-0.057,8,9,0.038,0.021)
+t <- factor(t, levels = unique(t))
+Tabela2 <- tapply(va, list(s, t), function(z) as.character(z))
+Tabela2 <- as.matrix(Tabela2)
+Tabela2
 
 #i) aumento de esparsidade 0.008 -> 0.007
 

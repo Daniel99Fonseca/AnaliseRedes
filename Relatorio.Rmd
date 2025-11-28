@@ -619,4 +619,11 @@ A nova rede cria percursos curtos graças aos hubs, mas dificulta a formação d
 
 **IX)  Compare os resultados obtidos antes e após a remoção de ligações.**
 
+```{r}
+library(kableExtra)
+kable(Tabela1, format = "latex", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
 
+kable(Tabela2, format = "latex", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+```
