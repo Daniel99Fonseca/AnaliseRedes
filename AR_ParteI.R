@@ -287,8 +287,10 @@ Tabela1
 s<-c("rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2","rede Q1","rede Q2")
 t<-c("Mediana","Mediana","Heterogeneidade","Heterogeneidade","Associação de grau","Associação de grau","Diâmetro","Diâmetro","Coeficiente de clustering","Coeficiente de clustering")
 va<-c(3,2,2.13,2.15,-0.064,-0.057,8,9,0.038,0.021)
-
-
+t <- factor(t, levels = unique(t))
+Tabela2 <- tapply(va, list(s, t), function(z) as.character(z))
+Tabela2 <- as.matrix(Tabela2)
+Tabela2
 
 #i) aumento de esparsidade 0.008 -> 0.007
 
