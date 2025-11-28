@@ -621,6 +621,6 @@ A nova rede cria percursos curtos graças aos hubs, mas dificulta a formação d
 
 ```{r}
 library(kableExtra)
-kable(Tabela_final, format = "latex", booktabs = TRUE) %>%
+kable(Tabela1, format = "latex", booktabs = TRUE) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
