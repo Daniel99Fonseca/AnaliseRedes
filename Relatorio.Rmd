@@ -627,3 +627,9 @@ kable(Tabela1, format = "latex", booktabs = TRUE) %>%
 kable(Tabela2, format = "latex", booktabs = TRUE) %>%
   kable_styling(latex_options = c("striped", "hold_position"))
 ```
+
+A comparação entre as redes Q1 e Q2 evidencia o impacto da remoção de ligações na estrutura e nas propriedades topológicas do grafo. Apesar de ambas apresentarem densidades muito próximas (0,008 em Q1 e 0,007 em Q2), a pequena redução observada já é suficiente para alterar características estruturais relevantes. Um dos efeitos mais imediatos é a perda de conectividade: enquanto a rede Q1 é conexa, a rede Q2 deixa de o ser, indicando que a eliminação de arestas fragmentou a rede em componentes menores.
+
+No conjunto, as alterações observadas entre Q1 e Q2 são consistentes com a remoção de arestas: a rede torna-se menos conectada, mais dispersa, com menor clustering e com caminhos mais longos entre os nós. Embora a estrutura geral se mantenha semelhante, estas mudanças revelam uma fragilização da coesão e da eficiência estrutural da rede após a redução das ligações.
+
+
