@@ -61,7 +61,10 @@ plot(
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
-hist(graus_festa, breaks = 20, col = "lightblue",
+
+
+barplot(table(graus_festa), 
+     col = "lightblue",
      main = "Distribuição de Grau na Festa",
      xlab = "Número de Interações",
      ylab = "Frequência")
@@ -528,23 +531,33 @@ que indica que a grande maioria dos nodes tem poucas ligações.
 
 par(mfrow = c(1, 2), oma = c(0, 0, 3, 0)) 
 
-hist(graus_q2, breaks = "FD", col = "skyblue",
-     xlim = c(0, 10),
-     main = "Entre 0 e 10",
-     xlab = " Grau (Número de Interações)",
-     ylab = "Frequência")
+dados_0_10 <- graus_q2[graus_q2 <= 10]
+
+freq_0_10 <- table(dados_0_10)
+
+barplot(freq_0_10,
+        col = "skyblue",
+        xlab = "Grau",
+        ylab = "Frequência",
+        main = "Graus de 0–10")
 
 abline(v = mean(graus_q2), col = "red", lwd = 2)
 abline(v = median(graus_q2), col = "blue", lwd = 2)
 
 
 legend("topright", legend = c("Média", "Mediana"), col = c("red", "blue"), lwd = 2,
-       bg = "white")
+       bg = "white",cex=0.8)
 
-hist(graus_q2[graus_q2 > 10], breaks = "FD", col = "lightgreen",
-     main = "Cauda (Grau > 10)",
-     xlab = "Grau",
-     ylab = "Frequência")
+dados_maior_10 <- graus_q2[graus_q2 > 10]
+
+freq_maior_10 <- table(dados_maior_10)
+
+barplot(freq_maior_10,
+        col = "lightgreen",
+        xlab = "Grau",
+        ylab = "Frequência",
+        main = "Graus > 10",
+        space=0.7)
 
 par(mfrow = c(1, 1))
 
