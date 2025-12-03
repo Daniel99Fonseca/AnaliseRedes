@@ -1,10 +1,17 @@
 ---
-title: "null"
+title: "Relatório de Análise de Redes"
+author:
+  - "Daniel Fonseca 125158"
+  - "Francisco Gonçalves ######"
+  - "Guilherme Pires 131658"
+  - "João Filipe ######"
 output:
   pdf_document:
+    includes:
+      in_header: header.tex
     latex_engine: xelatex
   word_document: default
-date: "null"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,9 +25,7 @@ knitr::opts_chunk$set(echo=FALSE)
 
 A rede apresentada é relativa a contactos entre pessoas numa festa, sendo que os nodos representam pessoas e as ligações interações entre as pessoas presentes na festa. Ao longo deste capítulo, abordaremos a rede como **Rede Festa**.
 
-
 ## Análise da Rede da festa
-
 
 **a) Indique a dimensão e o número de ligações da rede. Determine a densidade e classifique a rede.**
 
@@ -46,8 +51,6 @@ plot(
   main = "Rede da Festa"
 )
 ```
-
-
 
 **b) Obtenha o grau médio e a distribuição de grau.** **Caracterize a distribuição de grau (mediana, quartis, etc.) e comente.** **Calcule o parâmetro de heterogeneidade.** **Indique o que pode concluir quanto à existência de hubs.**
 
@@ -108,15 +111,13 @@ Há valores elevados, sendo o máximo `r max_festa` interações, ou seja, algu�
 
 Relativamente à heterogeneidade, com o valor de **`r round(heterogeneity_festa,3)`**, é considerada heterogénea, o que, em confluência com a Figura 1, inferimos que há alguma variância nas interações registadas, e, devido à distribuição assimétrica à direita, concluímos que existem hubs, por ex, a pessoa com `r max_festa` interações é claramente um hub.
 
-
-
 **c) Estude a associação de grau e indique o que poderá concluir-se.**
 
 A associação de grau é uma medida que permite avaliar se existe uma correlação entre os graus dos nodos - participantes da festa. É coeficiente que varia de -1 a 1.
 
-- Valor positivo indica que nodos com grau alto tendem a ligar-se a outros nodos de grau alto. 
-- Valor negativo indica que nodos com grau alto tendem a ligar-se a nodos de grau baixo.
-- E um valor igual a 0 indica que não há nenhuma correlação.
+-   Valor positivo indica que nodos com grau alto tendem a ligar-se a outros nodos de grau alto.
+-   Valor negativo indica que nodos com grau alto tendem a ligar-se a nodos de grau baixo.
+-   E um valor igual a 0 indica que não há nenhuma correlação.
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Grau do nó vs Grau médio dos vizinhos", fig.pos='H', fig.align='center'}
 
@@ -138,7 +139,7 @@ grid()
 
 A figura 4 permite perceber se as pessoas com mais interações (ligações) tendem a interagir com outras igualmente populares ou com pessoas menos conectadas.
 
-A inclinação da linha vermelha indica a assortatividade de grau da rede. A assortatividade ligeiramente negativa (**-0.12**) que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis. 
+A inclinação da linha vermelha indica a assortatividade de grau da rede. A assortatividade ligeiramente negativa (**-0.12**) que houve uma tendência: pessoas muito sociáveis tenderam a interagir com pessoas menos sociáveis.
 
 ```{r echo=FALSE, warning=FALSE, fig.pos='H', fig.align='center'}
 library(knitr)
@@ -173,7 +174,6 @@ Avaliando o **clustering local**, observamos alguns nodos com valores acima de *
 O **core da rede** ajuda a identificar núcleos densamente conectados dentro de uma rede. O **k-core** de uma rede é um subgrafo que cada nodo tem pelo menos **k ligações** dentro desse subgrafo. No contexto da rede, um k=3 (3-core), só inclui as pessoas que têm **pelo menos** 3 interações dentro desse subgrupo.
 
 O core da rede corresponde ao k-core de maior ordem, ou seja, à concha com o maior valor de k: **28-core**. Este núcleo contém **60 nodos**, todos com pelo menos **28 ligações** internas no subgrafo correspondente, indicando que a rede tem um núcleo muito denso e conectado.
-
 
 ```{r core28_plot, fig.width=7, fig.height=5, fig.cap="28-core da Rede da Festa", fig.pos='H', fig.align='center'}
 
@@ -211,20 +211,17 @@ kable(tabela, caption = "Distribuição de k-cores na rede", align = "c")
 
 Interessante que, se "salta" do k-core 1 diretamente o k-core 11. Na Rede da Festa não existe nenhum conjunto de nodos que possam formar um subgrafo onde todos tenham grau ≥ 2. Por isso, não existe 2-core, 3-core, etc.
 
-Concluímos que a rede é bastante densa no seu centro, dado haverem 60 nodos com 28 ligações.
-Existe uma estrutura _core periphery_, com um núcleo denso e uma periferia menos conetada, 1-core, 11-core, etc. que se liga ao núcleo mas não é tão interligada internamente.
-Existe uma variação devido às 17 conchas, o que remete para a heterogeneidade da rede.
+Concluímos que a rede é bastante densa no seu centro, dado haverem 60 nodos com 28 ligações. Existe uma estrutura *core periphery*, com um núcleo denso e uma periferia menos conetada, 1-core, 11-core, etc. que se liga ao núcleo mas não é tão interligada internamente. Existe uma variação devido às 17 conchas, o que remete para a heterogeneidade da rede.
 
-Os 60 nodos do _core_ são os mais influentes em termos de interações. Assim, remover ou isolar o núcleo pode fragmentar significativamente a rede, enquanto remover nodos da periferia teria menos impacto.
+Os 60 nodos do *core* são os mais influentes em termos de interações. Assim, remover ou isolar o núcleo pode fragmentar significativamente a rede, enquanto remover nodos da periferia teria menos impacto.
 
-**g) Elabore um pequeno texto com comentários adicionais que considere pertinentes.**
-A rede analisada apresenta uma estrutura heterogénea, com uma densidade relativamente elevada (**~35%**) e uma média de grau de aproximadamente 39 ligações por nó. A distribuição de grau revela que a maioria dos indivíduos está moderadamente conectada, mas existem nós com grau muito elevado, sugerindo a presença de alguns hubs.
+**g) Elabore um pequeno texto com comentários adicionais que considere pertinentes.** A rede analisada apresenta uma estrutura heterogénea, com uma densidade relativamente elevada (**\~35%**) e uma média de grau de aproximadamente 39 ligações por nó. A distribuição de grau revela que a maioria dos indivíduos está moderadamente conectada, mas existem nós com grau muito elevado, sugerindo a presença de alguns hubs.
 
 A heterogeneidade ligeira sugere que, embora existam hubs, a maioria dos indivíduos participa de forma equilibrada nas interações, o que indica uma certa igualdade na participação social.
 
-O coeficiente de clustering global (~0,50) e os valores de clustering local demonstram a presença de numerosos triângulos, refletindo que amigos de um mesmo indivíduo tendem a conhecer-se entre si.
+O coeficiente de clustering global (\~0,50) e os valores de clustering local demonstram a presença de numerosos triângulos, refletindo que amigos de um mesmo indivíduo tendem a conhecer-se entre si.
 
-A estrutura da rede é propícia a formar “pequenos mundos”: nodos periféricos conseguem aceder rapidamente ao _core_ - através de poucos passos - favorecendo dinâmicas sociais.
+A estrutura da rede é propícia a formar “pequenos mundos”: nodos periféricos conseguem aceder rapidamente ao *core* - através de poucos passos - favorecendo dinâmicas sociais.
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Comunidades da Rede da Festa", fig.pos='H', fig.align='center'}
 
@@ -248,19 +245,15 @@ plot(lc, g_festa,
      main = "Comunidades da Rede da Festa")
 ```
 
-Na Figura X - Gráfico de Louvain - é possível observar as comunidades. 
-Cada cor representa uma comunidade detetada pelo algoritmo Louvain, sendo que os nós de cada comunidade estão mais conetados entre si. Por sua vez, os nós mais próximos uns dos outros tendem a ter mais ligações entre si. Os nós mais próximos das fronteiras de cada comunidade são considerados 'nós-pontes' dado facilitarem as interações entre diversas comunidades. 
-Desta forma, é possível observar, de forma visual, o que fora abordado até agora, os hubs, os nós centrais e os grupos mais coesos.
+Na Figura X - Gráfico de Louvain - é possível observar as comunidades. Cada cor representa uma comunidade detetada pelo algoritmo Louvain, sendo que os nós de cada comunidade estão mais conetados entre si. Por sua vez, os nós mais próximos uns dos outros tendem a ter mais ligações entre si. Os nós mais próximos das fronteiras de cada comunidade são considerados 'nós-pontes' dado facilitarem as interações entre diversas comunidades. Desta forma, é possível observar, de forma visual, o que fora abordado até agora, os hubs, os nós centrais e os grupos mais coesos.
 
 Em suma, trata-se de uma rede social relativamente densa e estruturada, com núcleos centrais influentes e uma periferia mais dispersa, permitindo identificar os indivíduos mais centrais e os padrões de ligação predominantes.
 
+**h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.**
 
-**h) Tendo em conta o contexto, identifique algumas características/o papel de alguns dos presentes na festa. Justifique.** 
+Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou populares na festa, servindo como hubs de interação, conectando várias pessoas que, de outra forma, poderiam não interagir, assim como quem pertence ao *28-core* - núcleo mais interno - desempenha um papel central na coesão do grupo, sendo considerados **'a alma da festa'**.
 
-Pessoas com muitas interações (grau elevado) são os mais sociáveis e/ou populares na festa, servindo como hubs de interação, conectando várias pessoas que, de outra forma, poderiam não interagir, assim como quem pertence ao _28-core_ - núcleo mais interno - desempenha um papel central na coesão do grupo, sendo considerados **'a alma da festa'**.
-
-A _**betweenness**_ mede quantas vezes um nó está no caminho mais curto entre outros dois nós.
-Pessoas com _betweenness_ alta são consideradas pontes, intermediários, ligam grupos diferentes, e com _betweeness_ baixa, estão integradas num grupo, mas não ligam grupos entre si.
+A ***betweenness*** mede quantas vezes um nó está no caminho mais curto entre outros dois nós. Pessoas com *betweenness* alta são consideradas pontes, intermediários, ligam grupos diferentes, e com *betweeness* baixa, estão integradas num grupo, mas não ligam grupos entre si.
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Os 10 nós com mais intermediação",fig.pos='H', fig.align='center'}
 top10 <- sort(bet, decreasing = TRUE)[1:10]
@@ -276,7 +269,8 @@ barplot(
   xlab = "Número do Nó"
 )
 ```
-Assim, de acordo com a Figura X, o Nodo 30 apresenta a maior _betweenness_ na rede, indicando que atuou como um intermediário crucial entre diferentes grupos na festa, facilitando a comunicação e as interações entre participantes que, de outra forma, estariam menos conectados.
+
+Assim, de acordo com a Figura X, o Nodo 30 apresenta a maior *betweenness* na rede, indicando que atuou como um intermediário crucial entre diferentes grupos na festa, facilitando a comunicação e as interações entre participantes que, de outra forma, estariam menos conectados.
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="O nó mais central da Rede da Festa", fig.pos='H', fig.align='center'}
 # Criar cores para os nós
@@ -312,16 +306,13 @@ Nodos com **clustering local** elevado - indivíduos cujos vizinhos estão muito
 
 O **nodo** com o maior grau é considerado o mais social devido ao elevado número de interações, podendo ter o papel de organizador da festa ou - se tal for o caso - o aniversariante.
 
-
 # Parte II - Q1
-
 
 ### Contextualização
 
-Foi nos pedida a criação de uma rede aleatória através do *Igraph*, usando o modelo _Preferential Attachment_ (PA) na qual devem existir **500 nodos** e cerca de **1000 ligações**. 
-Este modelo, que gera uma componente gigante que integra a maioria dos nodos, reflete a estrutura de muitas redes reais, como redes sociais.
+Foi nos pedida a criação de uma rede aleatória através do *Igraph*, usando o modelo *Preferential Attachment* (PA) na qual devem existir **500 nodos** e cerca de **1000 ligações**. Este modelo, que gera uma componente gigante que integra a maioria dos nodos, reflete a estrutura de muitas redes reais, como redes sociais.
 
-Para tal, gerou-se a rede através da função `sample_pa(n = 500, m = 2, directed = FALSE)`. O paramêmtro `n = 500` para os 500 nodos ; No modelo PA, cada novo nó, **n** liga-se a **m** nós já existentes. Como o número total de arestas aproximado é: arestas = n * m, então `m = 2` ; `directed = FALSE` dado que a rede é não direcionada.
+Para tal, gerou-se a rede através da função `sample_pa(n = 500, m = 2, directed = FALSE)`. O paramêmtro `n = 500` para os 500 nodos ; No modelo PA, cada novo nó, **n** liga-se a **m** nós já existentes. Como o número total de arestas aproximado é: arestas = n \* m, então `m = 2` ; `directed = FALSE` dado que a rede é não direcionada.
 
 ```{r fig.width=6, fig.height=6, echo=FALSE, fig.cap = 'Rede Aleatória Q1, gerada pelo Modelo Preferential Attachment', fig.pos='H'}
 
@@ -333,7 +324,7 @@ plot(rede_q1, vertex.size = 5, vertex.label = NA, edge.color = "grey")
 
 A densidade da rede gerada pelo modelo PA criada é de **`r round(densidade_pa, 3)`**, isto é, dentro desta rede apenas existem **`r round(densidade_pa * 100, 3)`%** das ligações possíveis.
 
-Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede esparsa**. 
+Como a densidade da rede é muito próxima de 0, a rede é classificada como **rede esparsa**.
 
 Esta baixa densidade é típica de redes geradas por modelos de crescimento preferencial, dado que poucos nodos acumulam muitas ligações enquanto a maioria permanece pouco conectada, resultando numa estrutura global muito esparsa.
 
@@ -345,7 +336,7 @@ Uma rede é conexa se, a partir de qualquer nodo na rede, seja possível alcanç
 
 O grau médio da rede é de **`r round(mean(graus_q1), 2)`**, ou seja, em média cada nodo possui cerca de **`r round(mean(graus_q1), 0)`** ligações.
 
-A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações. Os quartis permitem observar a dispersão dos graus, evidenciando a heterogeneidade típica do modelo Preferential Attachment. 
+A distribuição de grau mostra valores entre **`r min(graus_q1)`** e **`r max(graus_q1)`**, com quartis **Q1=`r quantile(graus_q1, probs = 0.25)`**, **Q2(Mediana)=`r median(graus_q1)`** e **Q3=`r quantile(graus_q1, probs = 0.75)`**, o que indica que a maioria dos nodos possui entre `r round(quantile(graus_q1, probs = 0.25))` e `r round(quantile(graus_q1, probs = 0.75))` ligações. Os quartis permitem observar a dispersão dos graus, evidenciando a heterogeneidade típica do modelo Preferential Attachment.
 
 As estatísticas descritivas mostram que a mediana do grau é menor que a média, refletindo que a maioria dos nodos possui poucas ligações, enquanto alguns nodos (hubs) apresentam um número elevado de ligações.
 
@@ -408,13 +399,14 @@ abline(lm(knn_vals_q1 ~ graus_q1), col="red", lwd=2)
 legend("topright", legend="Regressão Linear", col="red", lwd=2, bty="n")
 grid()
 ```
+
 Este comportamento é típico de redes geradas pelo modelo de *preferential attachment*, nas quais existem alguns nós altamente conectados (hubs) que funcionam como pontos centrais de ligação para muitos nós periféricos com poucas ligações. A disassortatividade sugere que a rede é eficiente na conectividade geral e espalha de informação, mas também que os hubs são pontos críticos cuja falha pode fragmentar a rede.
 
 **VI) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
 
-Calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance()` obtendo-se um valor de **`r round(avg_path, 3)`**, enquanto o diâmetro da rede foi de **`r diam`**. Como visto anteriormente, a rede é conexa, logo o diâmetro é calculado sobre a rede inteira. Caso não fosse, era preciso calcular a componente gigante e consequentemente, o seu diâmetro. 
+Calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance()` obtendo-se um valor de **`r round(avg_path, 3)`**, enquanto o diâmetro da rede foi de **`r diam`**. Como visto anteriormente, a rede é conexa, logo o diâmetro é calculado sobre a rede inteira. Caso não fosse, era preciso calcular a componente gigante e consequentemente, o seu diâmetro.
 
-Em média, são necessários cerca de **`r round(avg_path, 2)`** passos para ligar dois nodos da rede. Estes resultados indicam um comportamento de _small-world_. Apesar do grande número de nodos, qualquer par de nodos está separado por um pequeno número de passos, devido à presença de _hubs_ - caraterística do modelo PA. O diâmetro indica o maior caminho dos caminhos mais curtos, e confirma que mesmo os nodos mais distantes estão separados por um número reduzido de passos, ilustrado na Figura abaixo.
+Em média, são necessários cerca de **`r round(avg_path, 2)`** passos para ligar dois nodos da rede. Estes resultados indicam um comportamento de *small-world*. Apesar do grande número de nodos, qualquer par de nodos está separado por um pequeno número de passos, devido à presença de *hubs* - caraterística do modelo PA. O diâmetro indica o maior caminho dos caminhos mais curtos, e confirma que mesmo os nodos mais distantes estão separados por um número reduzido de passos, ilustrado na Figura abaixo.
 
 ```{r echo=FALSE, fig.width=9, fig.height=6, fig.cap="Diâmetro da Rede Q1", fig.pos='H'}
 # Encontrar os dois nodos que definem o diâmetro e o caminho entre eles
@@ -457,28 +449,21 @@ Assim, conclui-se que a rede apresenta uma elevada eficiência em termos de cone
 
 **VII) Determine os coeficientes de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos.**
 
-O coeficiente de _clustering_ indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si.
+O coeficiente de *clustering* indica a tendência dos nodos da rede formarem triângulos, ou seja, situações em que dois nodos ligados a um terceiro também estão ligados entre si.
 
 Os coeficientes - local e global - da rede foram calculados através da função `transitivity()`, tendo sido obtido o valor de clustering médio de **`r round(clust_media, 3)`**.
 
 Também se realizou a contagem direta de triângulos, em percentagem, o que retornou o valor de **`r round(pct_with_triangles, 2)`**%.
 
-Com base nos valores baixos de transitividade obtidos, inferimos que os triângulos são pouco frequentes na rede. Os vizinhos de um nodo têm **baixa tendência** a estar ligados entre si.
-Este padrão é coerente com o modelo PA, que tende a gerar redes com _hubs_, reduzindo a formação de triângulos. 
+Com base nos valores baixos de transitividade obtidos, inferimos que os triângulos são pouco frequentes na rede. Os vizinhos de um nodo têm **baixa tendência** a estar ligados entre si. Este padrão é coerente com o modelo PA, que tende a gerar redes com *hubs*, reduzindo a formação de triângulos.
 
-Assim, a rede Q1 favorece caminhos curtos através de _hubs_, no entanto, impede a formação de comunidades interligadas. 
-Em termos práticos, influenciar-se-ia processos de redundância de informação como, por exemplo, informação que poderá propagar-se rapidamente via _hubs_ mas sem redundância local garantida por triângulos, ou seja, como os vizinhos de um _hub_ não estão muito ligados entre si, se uma aresta falha, a informação perde um possível caminho alternativo e a transmissão fica mais dependente dos _hubs_.
-Logo, concluímos que a informação chega rapidamente a muitas partes da rede, devido aos hubs, mas não existem pequenos ciclos (triângulos) que reforcem a conetividade local.
-
+Assim, a rede Q1 favorece caminhos curtos através de *hubs*, no entanto, impede a formação de comunidades interligadas. Em termos práticos, influenciar-se-ia processos de redundância de informação como, por exemplo, informação que poderá propagar-se rapidamente via *hubs* mas sem redundância local garantida por triângulos, ou seja, como os vizinhos de um *hub* não estão muito ligados entre si, se uma aresta falha, a informação perde um possível caminho alternativo e a transmissão fica mais dependente dos *hubs*. Logo, concluímos que a informação chega rapidamente a muitas partes da rede, devido aos hubs, mas não existem pequenos ciclos (triângulos) que reforcem a conetividade local.
 
 # Parte II - Q2
 
-
 **I) Indique o número de ligações removidas;**
 
-Alteramos a rede obtida em Q1, atribuindo uma probabilidade de **0,1** (prob_rem <- 0.1 )  a cada uma das ligações desta ser removida, escolhendo as ligações a ser removidas usando esta função `runif(ecount(rede_q1)) < prob_rem`.
-Após a escolha das ligações selecionadas aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede.
-De seguida, removemos as ligações escolhidas usando `delete_edges(rede_q1, nod_rem)` 
+Alteramos a rede obtida em Q1, atribuindo uma probabilidade de **0,1** (prob_rem \<- 0.1 ) a cada uma das ligações desta ser removida, escolhendo as ligações a ser removidas usando esta função `runif(ecount(rede_q1)) < prob_rem`. Após a escolha das ligações selecionadas aleatóriamente pudémos verificar uma redução de **`r rem_nod`** na nova rede. De seguida, removemos as ligações escolhidas usando `delete_edges(rede_q1, nod_rem)`
 
 **II) Determine a densidade e classifique a rede;**
 
@@ -524,8 +509,7 @@ legend("topright", legend = paste("Mediana =", median(graus_q2)),
 grid(nx = NULL, ny = NA, col = "gray90", lty = "dotted")
 ```
 
-Como é possivél observar na figura 9 a distribuição é bastante assimétrica à direita, o
-que indica que a grande maioria dos nodes tem poucas ligações.
+Como é possivél observar na figura 9 a distribuição é bastante assimétrica à direita, o que indica que a grande maioria dos nodes tem poucas ligações.
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
@@ -563,8 +547,8 @@ par(mfrow = c(1, 1))
 
 mtext("Distribuição de Grau da Nova Rede", outer = TRUE, cex = 1.8)
 ```
-Apesar de haver nodos com graus bastante elevados em comparação com a mediana, o valor da média é mais aproximado da mediana pelo motivo de haver uma quantidade muito mais elevada de nodos com gruas perto do valor da mediana do que nodos com valores elevados.
 
+Apesar de haver nodos com graus bastante elevados em comparação com a mediana, o valor da média é mais aproximado da mediana pelo motivo de haver uma quantidade muito mais elevada de nodos com gruas perto do valor da mediana do que nodos com valores elevados.
 
 **V) Calcule o parâmetro de heterogeneidade. Indique o que pode concluir quanto à existência de hubs;**
 
@@ -576,14 +560,12 @@ Como este valor continua superior a 1, então a nova rede mantem-se heterogénea
 
 A associação de grau foi novamente calculada, através da função `assortativity_degree(rede_q2, directed=FALSE)` tendo sido obtido o valor de `r assor_q2`.
 
-O valor fica novamente **negativo**, concluindo que a rede continua **desassortativa**, o que já era de se esperar, porque ao remover ligações numa rede, seria estranho a rede tornar se assortativa. enquanto a maioria destes últimos não se conecta
-preferencialmente entre si, como se pode comprovar pela tendência negativa da figura X.
-
+O valor fica novamente **negativo**, concluindo que a rede continua **desassortativa**, o que já era de se esperar, porque ao remover ligações numa rede, seria estranho a rede tornar se assortativa. enquanto a maioria destes últimos não se conecta preferencialmente entre si, como se pode comprovar pela tendência negativa da figura X.
 
 **VII) Determine a média dos comprimentos dos caminhos mais curtos e o diâmetro da rede. Indique o que pode concluir-se quanto à distância média;**
 
- Novamente calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance(rede_q2, directed = FALSE)` obtendo-se um valor de **`r round(avg_path_q2, 3)`**, enquanto o diâmetro da rede foi de **`r diam_q2`**. A nova rede - como referido anteriormente - não é conexa. Desta forma, o seu diâmetro é equivalente ao diâmetro da componente gigante, cálculo este que é efetuado automaticamente pelo pacote _igraph_.
- 
+Novamente calculou-se o comprimento médio dos caminhos mais curtos usando a função `mean_distance(rede_q2, directed = FALSE)` obtendo-se um valor de **`r round(avg_path_q2, 3)`**, enquanto o diâmetro da rede foi de **`r diam_q2`**. A nova rede - como referido anteriormente - não é conexa. Desta forma, o seu diâmetro é equivalente ao diâmetro da componente gigante, cálculo este que é efetuado automaticamente pelo pacote *igraph*.
+
 ```{r echo=FALSE, fig.width=9, fig.height=6, fig.cap="Diâmetro da Rede Q1", fig.pos='H'}
 # Encontrar os dois nodos que definem o diâmetro e o caminho entre eles
 dia_path <- get_diameter(rede_q2, directed = FALSE)
@@ -620,6 +602,7 @@ plot(
   main = paste("Caminho do Diâmetro da Rede (", diam, " passagens)", sep = "")
 )
 ```
+
 Na figura X, é possivel observar o maior caminho dos caminhos mais curtos (diâmetro).
 
 **VIII) Determine o coeficiente de clustering da rede. Diga o que pode concluir-se quanto à existência de triângulos;**
@@ -630,7 +613,7 @@ Realizou se novamente a contagem direta de triângulos, em percentagem, o que re
 
 A nova rede cria percursos curtos graças aos hubs, mas dificulta a formação de comunidades ligadas entre si. A informação propaga-se rapidamente através dos hubs, porém sem redundância local: como os vizinhos dos hubs quase não se ligam entre si, a falha de uma aresta pode quebrar caminhos alternativos. Assim, a rede é rápida a difundir informação, mas carece de pequenos ciclos que reforcem a conectividade local.
 
-**IX)  Compare os resultados obtidos antes e após a remoção de ligações.**
+**IX) Compare os resultados obtidos antes e após a remoção de ligações.**
 
 ```{r}
 library(kableExtra)
@@ -644,5 +627,3 @@ kable(Tabela2, format = "latex", booktabs = TRUE) %>%
 A comparação entre as redes Q1 e Q2 evidencia o impacto da remoção de ligações na estrutura e nas propriedades topológicas do grafo. Apesar de ambas apresentarem densidades muito próximas (0,008 em Q1 e 0,007 em Q2), a pequena redução observada já é suficiente para alterar características estruturais relevantes. Um dos efeitos mais imediatos é a perda de conectividade: enquanto a rede Q1 é conexa, a rede Q2 deixa de o ser, indicando que a eliminação de arestas fragmentou a rede em componentes menores.
 
 No conjunto, as alterações observadas entre Q1 e Q2 são consistentes com a remoção de arestas: a rede torna-se menos conectada, mais dispersa, com menor clustering e com caminhos mais longos entre os nós. Embora a estrutura geral se mantenha semelhante, estas mudanças revelam uma fragilização da coesão e da eficiência estrutural da rede após a redução das ligações.
-
-

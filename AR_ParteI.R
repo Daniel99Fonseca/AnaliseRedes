@@ -46,7 +46,6 @@ heterogeneity_festa
 
 #c) Estude a associação de grau e indique o que poderá concluir-se.
 
-# Associação de Grau -> -0.1225804
 assortativity_degree(g_festa)
 
 knn_vals <- knn(g_festa)$knn
@@ -57,7 +56,6 @@ nos_grau1
 # d) Determine a média dos comprimentos dos caminhos mais curtos.
 # Indique o que pode concluir-se quanto à distância média.
 
-# Distância entre nodos 
 dist_festa <- distances(g_festa)
 mean_dist_festa <- mean(dist_festa)
 mean_dist_festa
@@ -65,13 +63,12 @@ mean_dist_festa
 # e) Determine os coeficientes de clustering dos nodos e da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos.
 
-# Clustering global -> 0.4952046 -> triângulos são frequentes
+# Clustering global
 clust_global_festa <- transitivity(g_festa, type="global")
 clust_global_festa
 
 # Clustering Local
 clust_local_festa <- transitivity(g_festa, type = "local", isolates = "zero")
-# isolates = "zero" remove nodos com graus 0 e 1.
 clust_local_festa
 mean(clust_local_festa)
 
@@ -90,14 +87,11 @@ bet <- betweenness(g_festa)
 cls <- closeness(g_festa)
 lc <- cluster_louvain(g_festa)
 
-#### Variáveis auxiliares para gráficos
-
-# Nó com maior betweenness
 nodo_top <- which.max(bet)
 
 membership_lc <- membership(lc)
 
-# Identificar os 5 nós com maior grau
+
 top_hubs <- names(sort(graus_festa, decreasing = TRUE)[1:5])
 top_hubs
 membership_lc[top_hubs]
@@ -108,9 +102,6 @@ membership_lc[top_hubs]
 #### Q1 #### seed <- 5158 (aluno Daniel Fonseca n. 125158)
 ############
 
-# Modelo Preferential-Attachment
-# nodes = 500 nodos
-# edges = 1000 ligacoes
 set.seed(5158)
 rede_q1 <- sample_pa(n = 500, m = 2, directed = FALSE)
 
@@ -119,12 +110,10 @@ ecount(rede_q1)
 vcount(rede_q1)
 
 # i) Determine a densidade e classifique a rede;
-# Bastante esparsa com densidade 0.008
 densidade_pa <- edge_density(rede_q1)
 densidade_pa
 
 # ii) Indique se a rede é conexa;
-# TRUE
 is_connected(rede_q1)
 
 # iii) - Obtenha o grau médio e a distribuição de grau.
@@ -150,13 +139,13 @@ cdf <- ecdf(graus_sorted)
 grau_medio <- mean(graus_q1)
 grau2_medio <- mean(graus_q1^2)
 
-H <- grau2_medio / (grau_medio^2) # H = 2.13
+H <- grau2_medio / (grau_medio^2)
 H
 
 # v) Estude a associação de grau e indique o que poderá concluir-se;
 
 assor <- assortativity_degree(rede_q1, directed=FALSE)
-assor # r < 0 é disassociativa, logo os hubs não estão conetados entre si.
+assor
 
 knn_vals_q1 <- knn(rede_q1)$knn
 
@@ -171,14 +160,13 @@ diam
 
 # vii) - Determine os coeficientes de clustering da rede. 
 # Diga o que pode concluir-se quanto à existência de triângulos.
-# Transitividade global
-trans_global <- transitivity(rede_q1, type = "global")    # razão de triângulos fechados / triplets
+
+trans_global <- transitivity(rede_q1, type = "global") 
 trans_global
 
 # Coeficiente local
 clust_local <- transitivity(rede_q1, type = "local")
 
-# coef local media
 clust_media <- transitivity(rede_q1, type = "average")
 clust_media
 
@@ -190,39 +178,32 @@ pct_with_triangles
 #### Q2 #### seed <- 5158 (aluno Daniel Fonseca n. 125158)
 ############
 
-# probabilidade da ligação de ser removido
 prob_rem <- 0.1 
 
-# escolhe as ligações a ser removidas (lista de [TRUE, FALSE, TRUE, TRUE...])
 rem_func <- runif(ecount(rede_q1)) < prob_rem 
 
-# guarda as ligações a ser removidas
 nod_rem <- E(rede_q1)[rem_func] 
 
-# remove as ligações selecionadas aleatóriamente da rede
 rede_q2 <- delete_edges(rede_q1, nod_rem) 
 
 
-ecount(rede_q1) #997 ligações
-ecount(rede_q2) #889 ligações
+ecount(rede_q1)
+ecount(rede_q2)
 
 # plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
 
 # i) - Indique o número de ligações removidas;
-# 89 ligações removidas
 rem_nod <- ecount(rede_q1) - ecount(rede_q2)
 rem_nod
 
 # ii) - Determine a densidade e classifique a rede;
-# Bastante esparsa com densidade 0.007 (Mais esparsa que rede_q1)
 densidade_q2 <- edge_density(rede_q2)
 
 # iii) - Indique se a rede é conexa;
-# FALSE -> existem nodos isolados (1)
 is_connected(rede_q2)
 
 # iv) - Obtenha o grau médio e a distribuição de grau.
-#  Caracterize a distribuição de grau (mediana, quartis, etc.) e comente; -> no relatório
+#  Caracterize a distribuição de grau (mediana, quartis, etc.) e comente;
 graus_q2 <- degree(rede_q2)
 
 avg_grau <- mean(graus_q2)
@@ -233,7 +214,7 @@ summary(graus_q2)
 grau_medio_q2 <- mean(graus_q2)
 grau2_medio_q2 <- mean(graus_q2^2)
 
-H_q2 <- grau2_medio_q2 / (grau_medio_q2^2) # H <- 2.15
+H_q2 <- grau2_medio_q2 / (grau_medio_q2^2)
 H_q2
 
 # Calcular distribuição acumulada
@@ -247,7 +228,7 @@ plot(cdf_q2, main = "Distribuição acumulada de grau",
 
 # vi) - Estude a associação de grau e indique o que poderá concluir-se;
 assor_q2 <- assortativity_degree(rede_q2, directed=FALSE)
-assor_q2# r < 0 é disassociativa, logo os hubs não estão conetados entre si.
+assor_q2
 
 
 # vii) - Determine a média dos comprimentos dos caminhos mais curtos e o 
@@ -266,7 +247,6 @@ clust_global_q2
 # Coeficiente local
 clust_local_q2 <- transitivity(rede_q2, type = "local")
 
-# coef local media
 clust_media_q2 <- transitivity(rede_q2, type = "average")
 clust_media_q2
 
@@ -291,20 +271,3 @@ t <- factor(t, levels = unique(t))
 Tabela2 <- tapply(va, list(s, t), function(z) as.character(z))
 Tabela2 <- as.matrix(Tabela2)
 Tabela2
-
-#i) aumento de esparsidade 0.008 -> 0.007
-
-#ii) deixa de ser conectada -> 1 nodo passou a ser isolado
-
-#iii) Min. 1st Qu.  Median    Mean 3rd Qu.    Max.  -> Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#    2.000   2.000   3.000   3.988   4.000  47.000     0.000   2.000   2.000   3.556   4.000  41.000
-
-#iv) Heterogenidade_q1 <- 2.13 => Heterogenidade_q2 <- 2.15
-# graus com mais ligações têm mais chance de perder ligações quando removemos nodos aleatóriamente, logo menor desigualdade de ligações entre nodos.
-
-#v) Assortatividade_q1 <- -0.064 => Assortatividade_q2 <- -0.057
-# A rede passou a ter menor tendência para conectar nós com graus semelhantes.
-
-#vi) Aumento da distância média e do diâmetro da rede devido à remoção de "atalhos".
-
-#vii) A clustering média diminuiu devido à diminução de nodos que resultou na diminuição de triângulos.
