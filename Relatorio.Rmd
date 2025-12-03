@@ -7,8 +7,6 @@ author:
   - "João Filipe ######"
 output:
   pdf_document:
-    includes:
-      in_header: header.tex
     latex_engine: xelatex
   word_document: default
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
