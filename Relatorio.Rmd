@@ -62,18 +62,14 @@ plot(
 
 ```{r echo=FALSE, fig.width=6, fig.height=4, fig.cap="Distribuição dos graus", fig.pos='H', fig.align='center'}
 
-
-
-barplot(table(graus_festa), 
-     col = "lightblue",
-     main = "Distribuição de Grau na Festa",
+hist(graus_festa, breaks = 20, col = "lightblue",
      xlab = "Número de Interações",
      ylab = "Frequência")
 
 abline(v = mean(graus_festa), col = "red", lwd = 2)
 abline(v = median(graus_festa), col = "blue", lwd = 2)
 
-legend("topright", legend = c("Média", "Mediana"), col = c("red", "blue"), lwd = 2)
+legend("topright", legend = c("Média", "Mediana"), col = c("red", "blue"), lwd = 2)
 ```
 
 Através das estatísticas da distribuição de grau na Rede Festa, inferimos que a pessoa típica, interagiu com **`r median_festa`** pessoas, o que representa uma festa bastante social.
