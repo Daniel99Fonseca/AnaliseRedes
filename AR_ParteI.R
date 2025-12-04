@@ -12,15 +12,15 @@ g_festa
 #a) Indique a dimensão e o número de ligações da rede. 
 # Determine a densidade e classifique a rede.
 
-# Dimensão / Número de nodos -> 113
+# Dimensão / Número de nodos
 n_nod_festa <- vcount(g_festa)
 n_nod_festa
 
-# Número de ligações -> 2196
+# Número de ligações
 n_lig_festa <- ecount(g_festa)
 n_lig_festa 
 
-# Densidade -> 0.3470291 -> relativamente densa
+# Densidade
 densidade_festa <- edge_density(g_festa)
 densidade_festa
 
@@ -40,7 +40,7 @@ media_festa <- mean(graus_festa)
 q1_festa <- quantile(graus_festa,0.25)
 q3_festa <- quantile(graus_festa,0.75)
 
-# Heterogeneidade -> 1.222905 -> Ligeiramente Heterogénia
+# Heterogeneidade
 heterogeneity_festa <- mean(graus_festa^2)/mean(graus_festa)^2
 heterogeneity_festa
 
@@ -189,8 +189,6 @@ rede_q2 <- delete_edges(rede_q1, nod_rem)
 
 ecount(rede_q1)
 ecount(rede_q2)
-
-# plot(rede_q2, vertex.size = 5, vertex.label = NA, edge.color = "lightblue")
 
 # i) - Indique o número de ligações removidas;
 rem_nod <- ecount(rede_q1) - ecount(rede_q2)
